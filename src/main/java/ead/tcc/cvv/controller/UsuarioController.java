@@ -19,8 +19,8 @@ public class UsuarioController {
     //Display a list of employees
 	@GetMapping("/")
 	public String viewHomePage(Model model) {
-		model.addAttribute("listEmployees", usuarioService.getAllUsuarios());
-		return "index";
+		model.addAttribute("listaUsuarios", usuarioService.getAllUsuarios());
+		return "usuarios/index";
 	}
 	
 	@GetMapping("/create")
@@ -42,7 +42,7 @@ public class UsuarioController {
 		
 		model.addAttribute("usuario",usuario);
 		
-		return "edit";
+		return "usuarios/edit";
 	}
 	
 	@GetMapping("/delete/{id}")
