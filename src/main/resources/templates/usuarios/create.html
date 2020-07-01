@@ -13,7 +13,8 @@
     crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-	
+    
+    <script src="https://cdn.jsdelivr.net/npm/places.js@1.19.0"></script>
 </head>
 <body>
 	<hr>
@@ -26,80 +27,77 @@
             <input class="form-control" type="text" th:field="*{email}">
             <label for="CPF">CPF</label>
             <input class="form-control" type="text" th:field="*{cpf}">
-            <label for="Cidade">Cidade</label>
-            <input class="form-control" id="cidade" type="text" th:field="*{cidade}">
-            <label for="Estado">Estado</label>
-            <input class="form-control" id="uf" type="text" th:field="*{uf}">
             <label for="Endereço">Endereço</label>
-            <input class="form-control" onchange="getEndereco(this)" type="text" id="endereco" th:field="*{endereco}">
+            <input type="search" id="endereco" th:field="*{endereco}" placeholder="Digite para Buscar">
+            <label for="Cidade">Cidade</label>
+            <input readonly class="form-control" id="cidade" type="text" th:field="*{cidade}">
+            <label for="Estado">Estado</label>
+            <input readonly class="form-control" id="uf" type="text" th:field="*{uf}">
             <input class="form-control" type="hidden" id="lat" th:field="*{latitude}">
             <input class="form-control" type="hidden" id="long" th:field="*{longitude}">
+
             <button id="verificador" type="button" onclick="verificaEndereco()" class="btn btn-success">Verificar Endereço</button>
             <button id="cadastrador" style="display:none;" class="btn btn-success">Cadastrar</button>
         </form>
-	</div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/places.js@1.19.0"></script>
+    <script>
+        //Instanciamos o Algolia Places
+        var placesAutocomplete = places({
+            appId: 'KEY',
+            apiKey: 'KEY',
+            container: document.querySelector('#endereco')
+        });
+
+        //Preenchemos a latitude e longitude
+        var lat = document.getElementById("lat");
+        var long = document.getElementById("long");
+        var cidade = document.getElementById("cidade");
+        var uf = document.getElementById("uf");
+
+        placesAutocomplete.on('change', function(e){
+            console.log(e.suggestion);
+                lat.value = e.suggestion['latlng']['lat'];
+                long.value = e.suggestion['latlng']['lng'];
+                cidade.value = typeof(e.suggestion.city) !== 'undefined' ? e.suggestion['city'] : '';
+                uf.value = typeof(e.suggestion.administrative) !== 'undefined' ? e.suggestion['administrative'] : '';
+            }
+        );
+
+        //Removemos caso o usuário apague
+        placesAutocomplete.on('clear', function(e){
+                lat.value = '';
+                long.value = '';
+                cidade.value = '';
+                uf.value = '';
+            }
+        );
+
+    </script>
 	<script>
-        function getEndereco(input){
-
-            //Sumimos com os botões
-            var cadastrador = document.getElementById("cadastrador");
-            var verificador = document.getElementById("verificador");
-
-            cadastrador.style.display = "none";
-            verificador.style.display = "block";
-
-            input = input.value;
-            var cidade = document.getElementById("cidade").value;
-            var uf = document.getElementById("uf").value;
-
-            var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + input + ",+" + cidade + ",+" + uf + ",+Brasil&key=AIzaSyDErvqK5dvtow3_wuK4fjP2Spr7cYvKLIw";
-
-            $.ajax({
-                type: "GET",
-                dataType: 'json',
-                url: url,
-                async: false,
-                success: function(data){
-
-                    var latField = document.getElementById("lat");
-                    var longField = document.getElementById("long");
-
-                    if(data['results'] == 'ZERO_RESULTS' || data['results'][0]['partial_match'] == 'true'){
-                        latField.value = '...';
-                        longField.value = '...';
-                    } else {
-                        var lat = data['results'][0]['geometry']['location']['lat'];
-                        var long = data['results'][0]['geometry']['location']['lng'];
-
-                        latField.value = lat;
-                        longField.value = long;
-                    }
-                    console.log(data);
-                }
-            });
-
-        }
-
         function verificaEndereco(){
-            var latField = document.getElementById("lat");
-            var longField = document.getElementById("long");
+            //Objetos a verificar
+            var lat = document.getElementById("lat");
+            var long = document.getElementById("long");
+            var cidade = document.getElementById("cidade");
+            var uf = document.getElementById("uf");
             var endereco = document.getElementById("endereco");
             
+            //Botões pra mostrar ou esconder
             var cadastrador = document.getElementById("cadastrador");
             var verificador = document.getElementById("verificador");
 
-            if(latField.value == '...' || longField.value == '...' || endereco.value == '...' ||
-                latField.value == '' || longField.value == '' || endereco.value == ''
-            ){
+            if(lat.value == '' || long.value == '' || cidade.value == '' || uf.value == '' || endereco.value == ''){
                 alert('Endereço não encontrado!');
                 latField.value = '';
                 longField.value = '';
                 endereco.value = '';
+                cidade.value = '';
+                uf.value = '';
 
                 cadastrador.style.display = "none";
                 verificador.style.display = "block";
             } else {
-                alert('Endereço encontrado!');
                 cadastrador.style.display = "block";
                 verificador.style.display = "none";
             }
