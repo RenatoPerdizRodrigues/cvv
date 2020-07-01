@@ -1,5 +1,10 @@
 package ead.tcc.cvv.repository;
 
-public class PerguntaRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import ead.tcc.cvv.model.Pergunta;
+
+public interface PerguntaRepository extends JpaRepository<Pergunta, Long>{
 
 }
