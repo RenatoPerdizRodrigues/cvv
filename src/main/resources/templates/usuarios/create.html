@@ -31,14 +31,23 @@
             <label for="Estado">Estado</label>
             <input class="form-control" id="uf" type="text" th:field="*{uf}">
             <label for="Endereço">Endereço</label>
-            <input class="form-control" onchange="getEndereco(this)" onblur="verificaEndereco()" type="text" id="endereco" th:field="*{endereco}">
-            <input class="form-control" type="text" id="lat" th:field="*{latitude}">
-            <input class="form-control" type="text" id="long" th:field="*{longitude}">
-            <button type="button" class="btn btn-success">Save</button>
+            <input class="form-control" onchange="getEndereco(this)" type="text" id="endereco" th:field="*{endereco}">
+            <input class="form-control" type="hidden" id="lat" th:field="*{latitude}">
+            <input class="form-control" type="hidden" id="long" th:field="*{longitude}">
+            <button id="verificador" type="button" onclick="verificaEndereco()" class="btn btn-success">Verificar Endereço</button>
+            <button id="cadastrador" style="display:none;" class="btn btn-success">Cadastrar</button>
         </form>
 	</div>
 	<script>
         function getEndereco(input){
+
+            //Sumimos com os botões
+            var cadastrador = document.getElementById("cadastrador");
+            var verificador = document.getElementById("verificador");
+
+            cadastrador.style.display = "none";
+            verificador.style.display = "block";
+
             input = input.value;
             var cidade = document.getElementById("cidade").value;
             var uf = document.getElementById("uf").value;
@@ -75,6 +84,9 @@
             var latField = document.getElementById("lat");
             var longField = document.getElementById("long");
             var endereco = document.getElementById("endereco");
+            
+            var cadastrador = document.getElementById("cadastrador");
+            var verificador = document.getElementById("verificador");
 
             if(latField.value == '...' || longField.value == '...' || endereco.value == '...' ||
                 latField.value == '' || longField.value == '' || endereco.value == ''
@@ -83,6 +95,13 @@
                 latField.value = '';
                 longField.value = '';
                 endereco.value = '';
+
+                cadastrador.style.display = "none";
+                verificador.style.display = "block";
+            } else {
+                alert('Endereço encontrado!');
+                cadastrador.style.display = "block";
+                verificador.style.display = "none";
             }
         }
     </script>
