@@ -22,6 +22,7 @@
 				<tr>
 					<th>#</th>
 					<th>Texto</th>
+					<th>Ações</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -29,6 +30,7 @@
 					<td th:text="${pergunta.id}"></td>
 					<td th:text="${pergunta.texto}"></td>
 					<td>
+						<a class="btn btn-warning" th:href="@{/respostas/{id}(id=${pergunta.id})}"> Respostas </a>
 						<a class="btn btn-warning" th:href="@{/perguntas/edit/{id}(id=${pergunta.id})}"> Editar </a>
 						<a class="btn btn-danger" th:href="@{/perguntas/delete/{id}(id=${pergunta.id})}"> Deletar </a>
 					</td>

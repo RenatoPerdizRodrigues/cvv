@@ -17,6 +17,9 @@ public class Resposta {
 	
 	@Column(name = "texto")
 	private String texto;
+	
+	@Column(name = "score")
+	private int score;
 
 	@Column(name = "pergunta_id")
 	private long pergunta_id;
@@ -45,5 +48,11 @@ public class Resposta {
 		this.pergunta_id = pergunta_id;
 	}
 	
-	
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
 }

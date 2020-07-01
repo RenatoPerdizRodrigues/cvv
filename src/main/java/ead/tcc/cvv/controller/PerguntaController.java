@@ -16,7 +16,6 @@ public class PerguntaController {
 	@Autowired
 	private PerguntaService perguntaService;
 
-    //Display a list of employees
 	@GetMapping("/perguntas")
 	public String perguntas(Model model) {
 		model.addAttribute("listaPerguntas", perguntaService.getAllPerguntas());
@@ -33,7 +32,7 @@ public class PerguntaController {
 	@PostMapping("/perguntas/store")
 	public String store(@ModelAttribute("pergunta") Pergunta pergunta) {
 		perguntaService.savePergunta(pergunta);
-		return "redirect:/perguntas";
+		return "redirect:/teste";
 	}
 	
 	@GetMapping("perguntas/edit/{id}")

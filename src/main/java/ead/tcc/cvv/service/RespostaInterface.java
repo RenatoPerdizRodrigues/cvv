@@ -2,6 +2,9 @@ package ead.tcc.cvv.service;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.springframework.stereotype.Service;
 
 import ead.tcc.cvv.model.Resposta;
@@ -19,4 +22,8 @@ public interface RespostaInterface {
 	
 	//Método de deletar resposta
 	void deleteResposta(long id);
+	
+	//Método de pegar resposta por ID de pergunta
+	List<Resposta> allByPergunta(long id);
+	
 }

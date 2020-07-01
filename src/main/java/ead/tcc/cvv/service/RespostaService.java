@@ -1,13 +1,20 @@
 package ead.tcc.cvv.service;
 
 import java.util.List;
+
 import java.util.Optional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import ead.tcc.cvv.model.Resposta;
+import ead.tcc.cvv.repository.PerguntaRepository;
 import ead.tcc.cvv.repository.RespostaRepository;
 
+@Service
 public class RespostaService implements RespostaInterface{
 	//Conectamos ao repositório de resposta
 	@Autowired
@@ -17,7 +24,12 @@ public class RespostaService implements RespostaInterface{
 	public List<Resposta> getAllRespostas() {
 		return this.respostaRepository.findAll();
 	}
-
+	
+	@Override
+	public List<Resposta> allByPergunta(long id){
+		return this.respostaRepository.allByPergunta(id);
+	}
+	
 	@Override
 	public void saveResposta(Resposta resposta) {
 		this.respostaRepository.save(resposta);
