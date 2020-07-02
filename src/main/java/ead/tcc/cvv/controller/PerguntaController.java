@@ -32,7 +32,7 @@ public class PerguntaController {
 	@PostMapping("/perguntas/store")
 	public String store(@ModelAttribute("pergunta") Pergunta pergunta) {
 		perguntaService.savePergunta(pergunta);
-		return "redirect:/teste";
+		return "redirect:/perguntas";
 	}
 	
 	@GetMapping("perguntas/edit/{id}")

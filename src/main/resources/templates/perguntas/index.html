@@ -35,6 +35,11 @@
 						<a class="btn btn-danger" th:href="@{/perguntas/delete/{id}(id=${pergunta.id})}"> Deletar </a>
 					</td>
 				</tr>
+				<tr th:each="resposta: ${listaRespostas}">
+					<td th:text="${resposta.id}"></td>
+					<td th:text="${resposta.texto}"></td>
+					<td th:text="${resposta.score}"></td>
+				</tr>
 			</tbody>
 		</table>
 	</div>
