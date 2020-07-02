@@ -44,5 +44,10 @@ public class PerguntaService implements PerguntaInterface{
 	public void deletePergunta(long id) {
 		this.perguntaRepository.deleteById(id);
 	}
+	
+	@Override
+	public long countPerguntas() {
+		return this.perguntaRepository.count();
+	}
 
 }

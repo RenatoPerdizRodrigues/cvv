@@ -17,4 +17,7 @@ public interface PerguntaInterface {
 	
 	//Método de deletar pergunta
 	void deletePergunta(long id);
+	
+	//Pega o total de perguntas
+	long countPerguntas();
 }

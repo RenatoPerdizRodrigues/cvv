@@ -17,18 +17,18 @@
 <body>
 	<hr>
 	<div class="wrapper col-md-6 md-offset-2">
-		<h1>Criar Pergunta</h1>
-        <form action="#" th:action="@{/checkups/store}" th:object="${checkUp}", method="POST">
-            <div th:each="pergunta: ${listaPerguntas}">
+		<h1>Fazer Check-up</h1>
+        <form action="#" th:action="@{/checkups/store}" th:object="${checkup}", method="POST">
+            <div th:each="pergunta, iStat : ${listaPerguntas}">
                 <label th:text="${pergunta.texto}"/>
-                <select name="pergunta[]">
-                	<div th:each="resposta: ${listaRespostas}">
-                    	<option th:value="${resposta.score}" th:text="${resposta.texto}"></option>
+                <select onchange="addScore(this)" required th:name="${iStat.index}">
+                	<option selected value="">Selecionar</option>
+                	<div th:each="resposta: ${listaRespostas}" th:if="${resposta.pergunta_id} == ${pergunta.id}">
+                    	<option th:value="${resposta.score}" th:text="${resposta.texto}" ></option>
                     </div>
                 </select>
             </div>
-                <!-- <option th:value="${resposta.id}" th:text="${resposta.texto}" /> -->
-            <button class="btn btn-success">Cadastrar</button>
+            <button class="btn btn-success">Salvar</button>
         </form>
     </div>
 </body>
