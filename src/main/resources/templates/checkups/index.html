@@ -13,27 +13,25 @@
 	<link th:href="@{/css/styles.css}" rel="stylesheet" />
 </head>
 <body>
-	<a th:href="@{/perguntas/create}"> Nova Pergunta </a>
+	<a th:href="@{/checkups/create}"> Novo CheckUp </a>
 	<hr>
 	<div class="wrapper col-md-6 md-offset-2">
-		<h1>Lista de Perguntas</h1>
+		<h1>Lista de Checkups</h1>
 		<table class="table table-stripped">
 			<thead>
 				<tr>
 					<th>#</th>
-					<th>Texto</th>
-					<th>Ações</th>
+					<th>Usuário ID</th>
+					<th>Score</th>
+					<th>Data</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="pergunta: ${listaPerguntas}">
-					<td th:text="${pergunta.id}"></td>
-					<td th:text="${pergunta.texto}"></td>
-					<td>
-						<a class="btn btn-warning" th:href="@{/respostas/{id}(id=${pergunta.id})}"> Respostas </a>
-						<a class="btn btn-warning" th:href="@{/perguntas/edit/{id}(id=${pergunta.id})}"> Editar </a>
-						<a class="btn btn-danger" th:href="@{/perguntas/delete/{id}(id=${pergunta.id})}"> Deletar </a>
-					</td>
+				<tr th:each="checkUp: ${listaCheckUps}">
+					<td th:text="${checkUp.id}"></td>
+					<td th:text="${checkUp.usuario_id}"></td>
+					<td th:text="${checkUp.score}"></td>
+					<td th:text="${checkUp.data_checkup}"></td>
 				</tr>
 			</tbody>
 		</table>

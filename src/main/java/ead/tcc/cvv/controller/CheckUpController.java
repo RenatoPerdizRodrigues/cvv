@@ -11,10 +11,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import ead.tcc.cvv.model.CheckUp;
 import ead.tcc.cvv.service.CheckUpService;
 
+import ead.tcc.cvv.model.Pergunta;
+import ead.tcc.cvv.service.PerguntaService;
+
+import ead.tcc.cvv.model.Resposta;
+import ead.tcc.cvv.service.RespostaService;
+
 @Controller
 public class CheckUpController {
 	@Autowired
 	private CheckUpService checkUpService;
+	
+	@Autowired
+	private PerguntaService perguntaService;
+	
+	@Autowired
+	private RespostaService respostaService;
 
 	@GetMapping("/checkups")
 	public String checkups(Model model) {
@@ -26,6 +38,13 @@ public class CheckUpController {
 	public String create(Model model) {
 		CheckUp checkup = new CheckUp();
 		model.addAttribute("checkup",checkup);
+		
+		//Capturamos todas as perguntas
+		model.addAttribute("listaPerguntas", perguntaService.getAllPerguntas());
+		
+		//Capturamos todas as respostas
+		model.addAttribute("listaRespostas", respostaService.getAllRespostas());
+		
 		return "checkups/create";
 	}
 

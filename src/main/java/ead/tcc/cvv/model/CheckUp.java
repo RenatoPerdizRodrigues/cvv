@@ -14,8 +14,8 @@ public class CheckUp {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@Column(name = "user_id")
-	private long user_id;
+	@Column(name = "usuario_id")
+	private long usuario_id;
 
 	@Column(name = "score")
 	private long score;
@@ -31,12 +31,12 @@ public class CheckUp {
 		this.id = id;
 	}
 
-	public long getUser_id() {
-		return user_id;
+	public long getUsuario_id() {
+		return usuario_id;
 	}
 
-	public void setUser_id(long user_id) {
-		this.user_id = user_id;
+	public void setUsuario_id(long usuario_id) {
+		this.usuario_id = usuario_id;
 	}
 
 	public long getScore() {
