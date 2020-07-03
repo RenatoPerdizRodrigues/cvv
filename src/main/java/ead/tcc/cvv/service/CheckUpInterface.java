@@ -17,4 +17,7 @@ public interface CheckUpInterface {
 	
 	//Método de deletar checkup
 	void deleteCheckUp(long id);
+	
+	//Pegar check-up por usuário
+	List<CheckUp> getCheckUpUsuario(long id);
 }

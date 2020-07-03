@@ -44,6 +44,12 @@ public class CheckUpController {
 		return "checkups/index";
 	}
 	
+	@GetMapping("/checkups/{usuario_id}")
+	public String checkups(@PathVariable (value = "usuario_id") long usuario_id, Model model) {
+		model.addAttribute("listaCheckUps", checkUpService.getCheckUpUsuario(usuario_id));
+		return "checkups/index";
+	}
+	
 	@GetMapping("/checkups/create")
 	public String create(Model model) {
 		CheckUp checkup = new CheckUp();

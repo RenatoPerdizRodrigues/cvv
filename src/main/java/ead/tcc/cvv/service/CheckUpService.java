@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ead.tcc.cvv.model.CheckUp;
+import ead.tcc.cvv.model.Resposta;
 import ead.tcc.cvv.repository.CheckUpRepository;
 
 @Service
@@ -36,6 +37,11 @@ public class CheckUpService implements CheckUpInterface{
 		}
 		
 		return checkup;
+	}
+	
+	@Override
+	public List<CheckUp> getCheckUpUsuario(long id){
+		return this.checkupRepository.allByUsuario(id);
 	}
 
 	@Override
