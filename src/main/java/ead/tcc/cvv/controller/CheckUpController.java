@@ -15,8 +15,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import ead.tcc.cvv.model.CheckUp;
+import ead.tcc.cvv.model.Config;
 import ead.tcc.cvv.service.CheckUpService;
-
+import ead.tcc.cvv.service.ConfigService;
 import ead.tcc.cvv.model.Pergunta;
 import ead.tcc.cvv.service.PerguntaService;
 
@@ -33,6 +34,9 @@ public class CheckUpController {
 	
 	@Autowired
 	private RespostaService respostaService;
+	
+	@Autowired
+	private ConfigService configService;
 
 	@GetMapping("/checkups")
 	public String checkups(Model model) {
@@ -55,7 +59,7 @@ public class CheckUpController {
 	}
 
 	@PostMapping("/checkups/store")
-	public String store(@ModelAttribute("checkups") CheckUp checkup, final HttpServletRequest request) {
+	public String store(@ModelAttribute("checkups") CheckUp checkup, final HttpServletRequest request, Model model) {
 		
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date();
@@ -71,7 +75,32 @@ public class CheckUpController {
 		checkup.setScore(soma);
 		
 		checkUpService.saveCheckUp(checkup);
-		return "redirect:/checkups";
+		
+		return "redirect:/checkups/resultado/" + soma;
+	}
+	
+	@GetMapping("checkups/resultado/{soma}")
+	public String resultado(@PathVariable(value = "soma") long soma, Model model) {
+		//Analisamos o score final e retornamos a mensagem adequada
+		Config config = configService.getConfig(1);
+		
+		long scoreGrave = config.getPontuacao_grave();
+		long scoreMedio = config.getPontuacao_media();
+		long scoreBrando = config.getPontuacao_branda();
+		
+		if(soma < scoreBrando) {
+			model.addAttribute("mensagem", config.getMensagem_branda());
+		} else if(soma >= scoreBrando && soma < scoreGrave) {
+			model.addAttribute("mensagem", config.getMensagem_media());
+		} else if(soma >= scoreGrave) {
+			model.addAttribute("mensagem", config.getMensagem_grave());
+		} else {
+			model.addAttribute("mensagem", "Score não computado!");
+		}
+		
+		model.addAttribute("score", soma);
+		
+		return "checkups/resultado";
 	}
 	
 	@GetMapping("checkups/delete/{id}")

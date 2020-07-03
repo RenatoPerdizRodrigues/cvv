@@ -3,7 +3,6 @@ package ead.tcc.cvv.service;
 import java.util.List;
 
 import ead.tcc.cvv.model.CheckUp;
-import ead.tcc.cvv.model.Pergunta;
 
 //Interface de CheckUp
 public interface CheckUpInterface {
