@@ -25,6 +25,8 @@
             <input class="form-control" type="text" th:field="*{nome}">
             <label for="E-mail">E-mail</label>
             <input class="form-control" type="text" th:field="*{email}">
+            <label for="Senha">Senha</label>
+            <input class="form-control" type="password" th:field="*{senha}">
             <label for="CPF">CPF</label>
             <input class="form-control" type="text" th:field="*{cpf}">
             <label for="Endereço">Endereço</label>
@@ -44,8 +46,8 @@
     <script>
         //Instanciamos o Algolia Places
         var placesAutocomplete = places({
-            appId: 'KEY',
-            apiKey: 'KEY',
+            appId: 'plG7RVYOC7TK',
+            apiKey: '1f4ea0bd7fee503c3c603ad1bba2bd5e',
             container: document.querySelector('#endereco')
         });
 
