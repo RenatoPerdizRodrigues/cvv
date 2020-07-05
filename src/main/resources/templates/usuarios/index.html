@@ -13,8 +13,16 @@
 	<link th:href="@{/css/styles.css}" rel="stylesheet" />
 </head>
 <body>
+	
+	<form action="/logout" method=post>
+	    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+	    <input type="submit" value="logout">
+	</form>
+
+	
 	<a th:href="@{/create}"> Novo Usuário </a>
 	<hr>
+	<span th:text="${username}"/>
 	<div class="wrapper col-md-6 md-offset-2">
 		<h1>Lista de Usuários</h1>
 		<table class="table table-stripped">
