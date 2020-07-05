@@ -39,6 +39,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		
 		http.csrf()
 			.ignoringAntMatchers("/logout");
+		
+		http.httpBasic().disable();
 	}
 	
 	@Bean
