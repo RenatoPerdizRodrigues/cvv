@@ -7,6 +7,7 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import ead.tcc.cvv.model.CheckUp;
 import ead.tcc.cvv.model.Config;
+import ead.tcc.cvv.model.DetalhesUsuario;
 import ead.tcc.cvv.service.CheckUpService;
 import ead.tcc.cvv.service.ConfigService;
 import ead.tcc.cvv.model.Pergunta;
@@ -71,7 +73,16 @@ public class CheckUpController {
 		Date date = new Date();
 		checkup.setData_checkup(dateFormat.format(date));
 		
-		checkup.setUsuario_id(1);
+		long id;
+		
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if (principal instanceof DetalhesUsuario) {
+			id= ((DetalhesUsuario)principal).getUserId();
+		} else {
+			id = 1;
+		}
+		
+		checkup.setUsuario_id(id);
 		
 		long soma = 0;
 		for(long i = 0; i < perguntaService.countPerguntas(); i++) {

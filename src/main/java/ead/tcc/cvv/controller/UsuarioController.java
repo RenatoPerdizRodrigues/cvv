@@ -1,5 +1,6 @@
 package ead.tcc.cvv.controller;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +23,13 @@ public class UsuarioController {
 	@Autowired
 	private UsuarioService usuarioService;
 	
+	
+	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
     //Display a list of employees
-	@GetMapping("/")
+	@GetMapping("/usuarios")
 	public String viewHomePage(Model model) {
 		model.addAttribute("listaUsuarios", usuarioService.getAllUsuarios());
 		
@@ -47,7 +50,7 @@ public class UsuarioController {
 		return "usuarios/index";
 	}
 	
-	@GetMapping("/create")
+	@GetMapping("/cadastrar")
 	public String create(Model model) {
 		Usuario usuario = new Usuario();
 		model.addAttribute("usuario",usuario);
@@ -62,9 +65,16 @@ public class UsuarioController {
 		usuario.setSenha(senha);
 		
 		//Definimos o papel, que é sempre USUARIO para um cadastro normal
-		usuario.setPapel("USUARIO,");
+		usuario.setPapel("ROLE_USER");
 		
 		usuarioService.saveUsuario(usuario);
+		
+		try {
+			request.login(request.getParameter("email"), request.getParameter("senha"));
+	    } catch (ServletException e) {
+	        //erro
+	    }
+		
 		return "redirect:/";
 	}
 	

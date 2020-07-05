@@ -27,10 +27,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
+		/*
 			.antMatchers("/checkups").hasRole("ADMIN")
 			.antMatchers("/checkup/{id}").hasAnyRole("ADMIN", "USER")
 			.antMatchers("/create").hasRole("USER")
-			.and().formLogin();
+		*/
+			.antMatchers("/checkups/create").hasAnyRole("ADMIN", "USER")
+			.antMatchers("/").permitAll()
+			.and().formLogin()
+				.defaultSuccessUrl("/checkups/create", true);
 		
 		http.csrf()
 			.ignoringAntMatchers("/logout");

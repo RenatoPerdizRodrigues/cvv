@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 public class DetalhesUsuario implements UserDetails {
 	
+	private long id;
 	private String userName;
 	private String password;
 	private List<GrantedAuthority> authorities;
@@ -18,6 +19,7 @@ public class DetalhesUsuario implements UserDetails {
 	public DetalhesUsuario(Usuario usuario) {
 		this.userName = usuario.getEmail();
 		this.password = usuario.getSenha();
+		this.id = usuario.getId();
 		this.authorities = Arrays.stream(usuario.getPapel().split(",")).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
 	}
 	
@@ -58,6 +60,10 @@ public class DetalhesUsuario implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		return true;
+	}
+
+	public long getUserId() {
+		return id;
 	}
 
 }
