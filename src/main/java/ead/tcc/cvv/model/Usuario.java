@@ -41,6 +41,9 @@ public class Usuario {
 	
 	@Column(name = "longitude")
 	private String longitude;
+	
+	@Column(name = "papel")
+	private String papel;
 
 	public long getId() {
 		return id;
@@ -120,6 +123,14 @@ public class Usuario {
 
 	public void setLongitude(String longitude) {
 		this.longitude = longitude;
+	}
+	
+	public String getPapel() {
+		return papel;
+	}
+
+	public void setPapel(String papel) {
+		this.papel = papel;
 	}
 	
 	//Getters e setters	
