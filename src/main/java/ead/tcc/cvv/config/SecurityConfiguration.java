@@ -29,8 +29,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		http.authorizeRequests()
 			.antMatchers("/checkups").hasRole("ADMIN")
 			.antMatchers("/checkup/{id}").hasAnyRole("ADMIN", "USER")
-			.antMatchers("/create").permitAll()
+			.antMatchers("/create").hasRole("USER")
 			.and().formLogin();
+		
+		http.csrf()
+			.ignoringAntMatchers("/logout");
 	}
 	
 	@Bean
