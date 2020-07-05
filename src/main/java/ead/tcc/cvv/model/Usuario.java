@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="usuarios")
+@Table(name="users")
 public class Usuario {
 	//Atributos com marcadores de seus valores na tabela a ser gerada
 	@Id
@@ -20,6 +20,9 @@ public class Usuario {
 
 	@Column(name = "email")
 	private String email;
+	
+	@Column(name = "password")
+	private String password;
 	
 	@Column(name = "cpf")
 	private String cpf;
@@ -53,6 +56,14 @@ public class Usuario {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+	
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password= password;
 	}
 
 	public String getEmail() {
@@ -110,7 +121,5 @@ public class Usuario {
 	public void setLongitude(String longitude) {
 		this.longitude = longitude;
 	}
-	
-	//Getters e setters	
 	
 }

@@ -1,5 +1,7 @@
 package ead.tcc.cvv.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import ead.tcc.cvv.model.Usuario;
 import ead.tcc.cvv.service.UsuarioService;
@@ -29,9 +33,21 @@ public class UsuarioController {
 		model.addAttribute("usuario",usuario);
 		return "usuarios/create";
 	}
+	
+	@GetMapping("/login")
+	public String login() {
+		return "usuarios/create";
+	}
 
 	@PostMapping("/store")
-	public String store(@ModelAttribute("usuario") Usuario usuario) {
+	public String store(@ModelAttribute("usuario") Usuario usuario, final HttpServletRequest request) {
+		
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
+		
+		String password = encoder.encode(request.getParameter("password"));
+		
+		usuario.setPassword(password);
+		
 		usuarioService.saveUsuario(usuario);
 		return "redirect:/";
 	}

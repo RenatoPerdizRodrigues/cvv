@@ -24,6 +24,7 @@ import ead.tcc.cvv.service.PerguntaService;
 import ead.tcc.cvv.model.Resposta;
 import ead.tcc.cvv.service.RespostaService;
 
+
 @Controller
 public class CheckUpController {
 	@Autowired
