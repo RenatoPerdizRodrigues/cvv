@@ -15,11 +15,14 @@ public class Usuario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@Column(name = "nome")
+	@Column(name = "nome") 
 	private String nome;
 
 	@Column(name = "email")
 	private String email;
+	
+	@Column(name = "senha")
+	private String senha;
 	
 	@Column(name = "cpf")
 	private String cpf;
@@ -61,6 +64,14 @@ public class Usuario {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 	public String getCpf() {
