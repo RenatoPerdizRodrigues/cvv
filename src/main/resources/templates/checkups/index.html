@@ -50,7 +50,7 @@
 			<thead>
 				<tr>
 					<th>#</th>
-					<th>Usuário ID</th>
+					<th>Nome</th>
 					<th>Score</th>
 					<th>Data</th>
 				</tr>
@@ -58,7 +58,7 @@
 			<tbody>
 				<tr th:each="checkUp: ${listaCheckUps}">
 					<td th:text="${checkUp.id}"></td>
-					<td th:text="${checkUp.usuario_id}"></td>
+					<td th:text="${usuario.nome}"></td>
 					<td th:text="${checkUp.score}"></td>
 					<td th:text="${checkUp.data_checkup}"></td>
 				</tr>

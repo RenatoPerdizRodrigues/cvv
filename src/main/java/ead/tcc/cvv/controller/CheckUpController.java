@@ -3,6 +3,7 @@ package ead.tcc.cvv.controller;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -25,6 +26,7 @@ import ead.tcc.cvv.service.PerguntaService;
 
 import ead.tcc.cvv.model.Resposta;
 import ead.tcc.cvv.service.RespostaService;
+import ead.tcc.cvv.service.UsuarioService;
 
 @Controller
 public class CheckUpController {
@@ -39,6 +41,9 @@ public class CheckUpController {
 	
 	@Autowired
 	private ConfigService configService;
+	
+	@Autowired
+	private UsuarioService usuarioService;
 
 	@GetMapping("/checkups")
 	public String checkups(Model model) {
@@ -48,8 +53,43 @@ public class CheckUpController {
 	
 	@GetMapping("/checkups/{usuario_id}")
 	public String checkups(@PathVariable (value = "usuario_id") long usuario_id, Model model) {
-		model.addAttribute("listaCheckUps", checkUpService.getCheckUpUsuario(usuario_id));
+		List<CheckUp> checkUpList = checkUpService.getCheckUpUsuario(usuario_id);
+		model.addAttribute("listaCheckUps", checkUpList);
+		
+		//Loopamos a lista de check-ups para arrumar as datas
+		for (int i = 0; i < checkUpList.size(); i++) {
+			String data = checkUpList.get(i).getData_checkup();
+			String split[] = data.split("-");
+			
+			checkUpList.get(i).setData_checkup(split[2] + "/" + split[1] + "/" + split[0]);
+			
+		}
+		
+		model.addAttribute("usuario", usuarioService.getUsuario(usuario_id));
 		return "checkups/index";
+	}
+	
+	@GetMapping("/checkups/mapa/{cidade}")
+	public String mapa(@PathVariable (value = "cidade") String cidade, Model model) {
+		
+		List<CheckUp> checkUpList = checkUpService.getAllCheckUps();
+		model.addAttribute("listaCheckUps", checkUpList);
+		
+		//Loopamos a lista de check-ups para arrumar as datas
+		for (int i = 0; i < checkUpList.size(); i++) {
+			String data = checkUpList.get(i).getData_checkup();
+			String split[] = data.split("-");
+			
+			checkUpList.get(i).setData_checkup(split[2] + "/" + split[1] + "/" + split[0]);
+			
+		}
+		
+		model.addAttribute("listaCheckUps", checkUpList);
+		
+
+		model.addAttribute("listaUsuarios", usuarioService.getAllUsuarios());
+		
+		return "checkups/mapa";
 	}
 	
 	@GetMapping("/checkups/create")
