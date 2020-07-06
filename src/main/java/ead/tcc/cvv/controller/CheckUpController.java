@@ -89,6 +89,24 @@ public class CheckUpController {
 
 		model.addAttribute("listaUsuarios", usuarioService.getAllUsuarios());
 		
+		model.addAttribute("latitudeCentral", "-23.54");
+		model.addAttribute("longitudeCentral", "-46.63");
+		model.addAttribute("cidade", "SAO PAULO");
+		
+		return "checkups/mapa";
+	}
+	
+	@PostMapping("/checkups/mapacidade")
+	public String mapaCidade(final HttpServletRequest request, Model model) {
+		
+		String[] infos = request.getParameter("cidade").split("&");
+		
+		model.addAttribute("latitudeCentral", infos[0]);
+		model.addAttribute("longitudeCentral", infos[1]);
+		model.addAttribute("cidade", infos[2]);
+		
+		model.addAttribute("listaUsuarios", usuarioService.getAllUsuarios());
+				
 		return "checkups/mapa";
 	}
 	
