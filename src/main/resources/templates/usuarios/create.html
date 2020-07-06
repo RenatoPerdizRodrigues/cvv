@@ -50,6 +50,7 @@
             <input readonly class="form-control" id="uf" type="text" th:field="*{uf}" style="background-color: #e3e3e3;" placeholder="Digite seu endereço acima...">
             <input class="form-control" type="hidden" id="lat" th:field="*{latitude}">
             <input class="form-control" type="hidden" id="long" th:field="*{longitude}">
+            <input class="form-control" type="hidden" name="metodo" value="criacao">
 
 			<div class="text-right" style="margin-top:1em;">
 	            <button id="verificador" type="button" onclick="verificaEndereco()" class="btn btn-success">Verificar Endereço</button>

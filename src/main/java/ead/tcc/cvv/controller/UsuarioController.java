@@ -61,8 +61,13 @@ public class UsuarioController {
 	public String store(@ModelAttribute("usuario") Usuario usuario, final HttpServletRequest request) {
 		
 		//Definimos a senha usando nosso encoder BCrypt
-		String senha = passwordEncoder.encode(request.getParameter("senha"));
-		usuario.setSenha(senha);
+		if(request.getParameter("senha") != "") {
+			String senha = passwordEncoder.encode(request.getParameter("senha"));
+			usuario.setSenha(senha);
+		} else {
+			Usuario usuario_original = usuarioService.getUsuario(Long.parseLong(request.getParameter("id")));
+			usuario.setSenha(usuario_original.getSenha());
+		}
 		
 		//Definimos o papel, que é sempre USUARIO para um cadastro normal
 		usuario.setPapel("ROLE_USER");
@@ -75,7 +80,16 @@ public class UsuarioController {
 	        //erro
 	    }
 		
-		return "redirect:/";
+		//Verificamos se é cadastro ou edição
+		String metodo = request.getParameter("metodo");
+		
+		if(metodo.equals("edicao")) {
+			String id = request.getParameter("id");
+			return "redirect:/edit/" + id;
+		} else {
+			return "redirect:/";
+		}
+		
 	}
 	
 	@GetMapping("/edit/{id}")
@@ -83,6 +97,7 @@ public class UsuarioController {
 		Usuario usuario = usuarioService.getUsuario(id);
 		
 		model.addAttribute("usuario",usuario);
+		model.addAttribute("id",id);
 		
 		return "usuarios/edit";
 	}

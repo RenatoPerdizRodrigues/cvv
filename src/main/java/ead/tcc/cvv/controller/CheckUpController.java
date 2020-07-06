@@ -63,6 +63,17 @@ public class CheckUpController {
 		//Capturamos todas as respostas
 		model.addAttribute("listaRespostas", respostaService.getAllRespostas());
 		
+		long id;
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if (principal instanceof DetalhesUsuario) {
+			id= ((DetalhesUsuario)principal).getUserId();
+		} else {
+			id = 1;
+		}
+		
+
+		model.addAttribute("usuario_id", id);
+		
 		return "checkups/create";
 	}
 

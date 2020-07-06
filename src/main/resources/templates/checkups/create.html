@@ -25,11 +25,11 @@
 	<!--Navbar-->
 	<div class="navbar">
 		<div class="col-md-9 offset-md-1">
-			<a href="/">Fazer Check-Up</a>
+			<a href="/checkups/create">Fazer Check-Up</a>
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<a href="/">Seus Check-Ups</a>
+			<a th:href="${usuario_id}">Seus Check-Ups</a>
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<a href="/">Editar seu Cadastro</a>
+			<a th:href="@{../edit/{usuario_id}(usuario_id=${usuario_id})}">Editar seu Cadastro</a>
 		</div>
 		<div class="text-right">
 		
@@ -43,19 +43,19 @@
 			</form>
 		</div>
 	</div>
-	<div class="wrapper col-md-6 md-offset-2 formDiv" style="margin-top:2em">
+	
+	<div class="wrapper col-md-4 offset-md-4 formDiv" style="margin-top:2em">
 		<h1>Fazer Check-up</h1>
         <form action="#" th:action="@{/checkups/store}" th:object="${checkup}", method="POST">
             <div th:each="pergunta, iStat : ${listaPerguntas}">
-                <label th:text="${pergunta.texto}"/>
-                <select onchange="addScore(this)" required th:name="${iStat.index}">
-                	<option selected value="">Selecionar</option>
-                	<div th:each="resposta: ${listaRespostas}" th:if="${resposta.pergunta_id} == ${pergunta.id}">
-                    	<option th:value="${resposta.score}" th:text="${resposta.texto}" ></option>
-                    </div>
-                </select>
+                <h4 th:text="${pergunta.texto}"/>
+                <span th:each="resposta: ${listaRespostas}" th:if="${resposta.pergunta_id} == ${pergunta.id}">
+                	<input required type="radio" th:value="${resposta.score}" th:name="${iStat.index}" /> ) <span th:text="${resposta.texto}" /><br>
+                </span>
             </div>
-            <button class="btn btn-success">Salvar</button>
+            <div class="text-right">
+            	<button class="btn btn-success">Registrar Check-Up</button>
+            </div>
         </form>
     </div>
 </body>
