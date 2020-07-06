@@ -16,4 +16,7 @@ public interface UsuarioInterface {
 	
 	//Método de deletar usuário
 	void deleteUsuario(long id);
+	
+	//Pega usuário por cidade
+	List<Usuario> findByCidade(String cidade);
 }

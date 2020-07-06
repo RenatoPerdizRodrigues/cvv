@@ -40,4 +40,8 @@ public class UsuarioService implements UsuarioInterface {
 	public void deleteUsuario(long id) {
 		this.usuarioRepository.deleteById(id);
 	}
+
+	public List<Usuario> findByCidade(String cidade) {
+		return this.usuarioRepository.findByCidade(cidade);
+	}
 }

@@ -25,6 +25,7 @@ import ead.tcc.cvv.model.Pergunta;
 import ead.tcc.cvv.service.PerguntaService;
 
 import ead.tcc.cvv.model.Resposta;
+import ead.tcc.cvv.model.Usuario;
 import ead.tcc.cvv.service.RespostaService;
 import ead.tcc.cvv.service.UsuarioService;
 
@@ -72,27 +73,20 @@ public class CheckUpController {
 	@GetMapping("/checkups/mapa/{cidade}")
 	public String mapa(@PathVariable (value = "cidade") String cidade, Model model) {
 		
-		List<CheckUp> checkUpList = checkUpService.getAllCheckUps();
-		model.addAttribute("listaCheckUps", checkUpList);
+		//Listamos os usuários de SP
+		List<Usuario> usuariosList = usuarioService.findByCidade("SAO PAULO");
+		model.addAttribute("listaUsuarios", usuariosList);
 		
-		//Loopamos a lista de check-ups para arrumar as datas
-		for (int i = 0; i < checkUpList.size(); i++) {
-			String data = checkUpList.get(i).getData_checkup();
-			String split[] = data.split("-");
-			
-			checkUpList.get(i).setData_checkup(split[2] + "/" + split[1] + "/" + split[0]);
-			
+		//Loopamos os usuários para pegar o último check up deste usuário
+		for (int i = 0; i < usuariosList.size(); i++) {
+			long id= usuariosList.get(i).getId();
+			CheckUp last = checkUpService.getLastCheckUpUsuario(id);
 		}
-		
-		model.addAttribute("listaCheckUps", checkUpList);
-		
-
-		model.addAttribute("listaUsuarios", usuarioService.getAllUsuarios());
 		
 		model.addAttribute("latitudeCentral", "-23.54");
 		model.addAttribute("longitudeCentral", "-46.63");
 		model.addAttribute("cidade", "SAO PAULO");
-		
+				
 		return "checkups/mapa";
 	}
 	
@@ -105,7 +99,7 @@ public class CheckUpController {
 		model.addAttribute("longitudeCentral", infos[1]);
 		model.addAttribute("cidade", infos[2]);
 		
-		model.addAttribute("listaUsuarios", usuarioService.getAllUsuarios());
+		model.addAttribute("listaUsuarios", usuarioService.findByCidade(infos[2]));
 				
 		return "checkups/mapa";
 	}

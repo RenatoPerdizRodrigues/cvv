@@ -43,6 +43,11 @@ public class CheckUpService implements CheckUpInterface{
 	public List<CheckUp> getCheckUpUsuario(long id){
 		return this.checkupRepository.allByUsuario(id);
 	}
+	
+	@Override
+	public CheckUp getLastCheckUpUsuario(long id){
+		return this.checkupRepository.lastlByUsuario(id);
+	}
 
 	@Override
 	public void deleteCheckUp(long id) {

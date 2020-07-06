@@ -20,4 +20,9 @@ public interface CheckUpInterface {
 	
 	//Pegar check-up por usuário
 	List<CheckUp> getCheckUpUsuario(long id);
+	
+	//Pegar check-up por usuário, mas só o último
+	CheckUp getLastCheckUpUsuario(long id);
+	
+	
 }
