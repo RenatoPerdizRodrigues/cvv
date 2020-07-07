@@ -1,5 +1,7 @@
 package ead.tcc.cvv.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -8,15 +10,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ead.tcc.cvv.model.DetalhesUsuario;
 import ead.tcc.cvv.model.Pergunta;
+import ead.tcc.cvv.model.Resposta;
 import ead.tcc.cvv.service.PerguntaService;
+import ead.tcc.cvv.service.RespostaService;
 
 @Controller
 public class PerguntaController {
 	@Autowired
 	private PerguntaService perguntaService;
+	
+	@Autowired
+	private RespostaService respostaService;
 
 	@GetMapping("/perguntas")
 	public String perguntas(Model model) {
@@ -48,8 +56,11 @@ public class PerguntaController {
 	}
 
 	@PostMapping("/perguntas/store")
-	public String store(@ModelAttribute("pergunta") Pergunta pergunta) {
+	public String store(@ModelAttribute("pergunta") Pergunta pergunta, RedirectAttributes red) {
 		perguntaService.savePergunta(pergunta);
+		
+		red.addFlashAttribute("success", "Usuário editado com sucesso!");
+		
 		return "redirect:/perguntas";
 	}
 	
@@ -74,7 +85,15 @@ public class PerguntaController {
 	}
 	
 	@GetMapping("perguntas/delete/{id}")
-	public String delete(@PathVariable (value = "id") long id) {
+	public String delete(@PathVariable (value = "id") long id, RedirectAttributes red) {
+		
+
+		List<Resposta> respostas = this.respostaService.allByPergunta(id);
+		if(respostas.size() > 0) {
+			red.addFlashAttribute("error", "Esta pergunta possui respostas atreladas! As delete primeiro.");
+			return "redirect:/perguntas";
+		}
+		
 		this.perguntaService.deletePergunta(id);
 	
 		return "redirect:/perguntas";

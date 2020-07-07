@@ -28,6 +28,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 			//Rotas de admin
+			.antMatchers("/error").permitAll()
 			.antMatchers("/usuarios").hasRole("ADMIN")
 			.antMatchers("/delete/{id}").hasRole("ADMIN")
 			.antMatchers("/checkups").hasRole("ADMIN")
@@ -60,7 +61,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 			.and().formLogin()
 				.loginPage("/login")
 				.defaultSuccessUrl("/checkups/create", true)
-				.failureUrl("/login");
+				.failureUrl("/login/erro");
 		
 		http.csrf()
 			.ignoringAntMatchers("/logout");
