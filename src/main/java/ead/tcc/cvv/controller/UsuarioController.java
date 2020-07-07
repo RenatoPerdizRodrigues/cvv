@@ -34,16 +34,23 @@ public class UsuarioController {
 		model.addAttribute("listaUsuarios", usuarioService.getAllUsuarios());
 		
 		String username;
-		
+
+		//Verificamos permissão do admin
+		boolean admin = false;
+		long id;
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		if (principal instanceof DetalhesUsuario) {
 		  username = ((DetalhesUsuario)principal).getUsername();
+		  id= ((DetalhesUsuario)principal).getUserId();
+		  admin = ((DetalhesUsuario)principal).getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"));
 		} else {
 		  username = principal.toString();
+			id = 1;
 		}
 		
-		System.out.println("User " + ((DetalhesUsuario)principal).getAuthorities());
-		
+		//Passamos id e permissões de usuário
+		model.addAttribute("usuario_id", id);
+		model.addAttribute("admin",admin);
 		model.addAttribute("username", username);
 
 
@@ -98,6 +105,18 @@ public class UsuarioController {
 		
 		model.addAttribute("usuario",usuario);
 		model.addAttribute("id",id);
+		
+		//Verificamos permissão do admin
+		boolean admin = false;
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if (principal instanceof DetalhesUsuario) {
+			id= ((DetalhesUsuario)principal).getUserId();
+			admin = ((DetalhesUsuario)principal).getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"));
+		}
+		
+		//Passamos id e permissões de usuário
+		model.addAttribute("usuario_id", id);
+		model.addAttribute("admin",admin);
 		
 		return "usuarios/edit";
 	}

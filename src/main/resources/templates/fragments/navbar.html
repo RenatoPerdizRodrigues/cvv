@@ -1,0 +1,32 @@
+<div th:fragment="navbar">
+	<div class="navbar">
+		<div class="col-md-9 offset-md-1">
+			<a href="/checkups/create">Fazer Check-Up</a>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<a th:href="${usuario_id}">Seus Check-Ups</a>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<a th:href="@{../edit/{usuario_id}(usuario_id=${usuario_id})}">Editar seu Cadastro</a>
+			<span th:if="${admin == true}">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a th:href="@{/checkups}">Todos CheckUps</a>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a th:href="@{/usuarios}">Todos Usuários</a>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a th:href="@{/perguntas}">Editar Perguntas</a>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a th:href="@{/configs}">Editar Configurações</a>
+			</span>
+		</div>
+		<div class="text-right">
+		
+		</div>
+		<div class="text-right">
+			<form action="/logout" method=post>
+			    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+			    <button class="btn btn-danger" type="submit" value="logout">
+			    	<i class="fa fa-power-off"></i>
+			    </button>
+			</form>
+		</div>
+	</div>
+</div>

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class LoginController {
-	@GetMapping(value= {"/", "/login"})
+	@GetMapping(value= {"/login"})
 	public String create() {
 		
 		//Se usuário não estiver logado, retornamos a página de login

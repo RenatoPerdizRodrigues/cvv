@@ -53,17 +53,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 			.antMatchers("/checkups/resultado/soma").hasAnyRole("ADMIN", "USER")
 			
 			//Rotas para todos os usuários deslogados
-			.antMatchers("/").permitAll()
+			.antMatchers("/home").permitAll()
 			.antMatchers("/login").permitAll()
 			.antMatchers("/cadastrar").permitAll()
 			.antMatchers("/store").permitAll()
 			.and().formLogin()
-				.defaultSuccessUrl("/checkups/create", true);
+				.loginPage("/login")
+				.defaultSuccessUrl("/checkups/create", true)
+				.failureUrl("/login");
 		
 		http.csrf()
 			.ignoringAntMatchers("/logout");
 		
-		http.logout().logoutSuccessUrl("/");
+		http.logout().logoutSuccessUrl("/login");
 	}
 	
 	@Bean

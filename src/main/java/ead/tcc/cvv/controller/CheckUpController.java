@@ -49,6 +49,22 @@ public class CheckUpController {
 	@GetMapping("/checkups")
 	public String checkups(Model model) {
 		model.addAttribute("listaCheckUps", checkUpService.getAllCheckUps());
+		
+		//Verificamos permissão do admin
+		boolean admin = false;
+		long id;
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if (principal instanceof DetalhesUsuario) {
+			id= ((DetalhesUsuario)principal).getUserId();
+			admin = ((DetalhesUsuario)principal).getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"));
+		} else {
+			id = 1;
+		}
+		
+		//Passamos id e permissões de usuário
+		model.addAttribute("usuario_id", id);
+		model.addAttribute("admin",admin);
+				
 		return "checkups/index";
 	}
 	
@@ -67,6 +83,22 @@ public class CheckUpController {
 		}
 		
 		model.addAttribute("usuario", usuarioService.getUsuario(usuario_id));
+		
+		//Verificamos permissão do admin
+		boolean admin = false;
+		long id;
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if (principal instanceof DetalhesUsuario) {
+			id= ((DetalhesUsuario)principal).getUserId();
+			admin = ((DetalhesUsuario)principal).getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"));
+		} else {
+			id = 1;
+		}
+		
+		//Passamos id e permissões de usuário
+		model.addAttribute("usuario_id", id);
+		model.addAttribute("admin",admin);
+				
 		return "checkups/index";
 	}
 	
@@ -106,25 +138,30 @@ public class CheckUpController {
 	
 	@GetMapping("/checkups/create")
 	public String create(Model model) {
+		//Montamos objeto de CheckUp
 		CheckUp checkup = new CheckUp();
 		model.addAttribute("checkup",checkup);
+		
+		//Verificamos permissão do admin
+		boolean admin = false;
+		long id;
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if (principal instanceof DetalhesUsuario) {
+			id= ((DetalhesUsuario)principal).getUserId();
+			admin = ((DetalhesUsuario)principal).getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"));
+		} else {
+			id = 1;
+		}
+		
+		//Passamos id e permissões de usuário
+		model.addAttribute("usuario_id", id);
+		model.addAttribute("admin",admin);
 		
 		//Capturamos todas as perguntas
 		model.addAttribute("listaPerguntas", perguntaService.getAllPerguntas());
 		
 		//Capturamos todas as respostas
 		model.addAttribute("listaRespostas", respostaService.getAllRespostas());
-		
-		long id;
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		if (principal instanceof DetalhesUsuario) {
-			id= ((DetalhesUsuario)principal).getUserId();
-		} else {
-			id = 1;
-		}
-		
-
-		model.addAttribute("usuario_id", id);
 		
 		return "checkups/create";
 	}
