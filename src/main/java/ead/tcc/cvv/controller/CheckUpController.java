@@ -102,8 +102,8 @@ public class CheckUpController {
 		return "checkups/index";
 	}
 	
-	@GetMapping("/checkups/mapa/{cidade}")
-	public String mapa(@PathVariable (value = "cidade") String cidade, Model model) {
+	@GetMapping("/checkups/mapa")
+	public String mapa(Model model) {
 		
 		//Listamos os usuários de SP
 		List<Usuario> usuariosList = usuarioService.findByCidade("SAO PAULO");
@@ -118,6 +118,21 @@ public class CheckUpController {
 		model.addAttribute("latitudeCentral", "-23.54");
 		model.addAttribute("longitudeCentral", "-46.63");
 		model.addAttribute("cidade", "SAO PAULO");
+		
+		//Verificamos permissão do admin
+		boolean admin = false;
+		long id;
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if (principal instanceof DetalhesUsuario) {
+			id= ((DetalhesUsuario)principal).getUserId();
+			admin = ((DetalhesUsuario)principal).getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"));
+		} else {
+			id = 1;
+		}
+		
+		//Passamos id e permissões de usuário
+		model.addAttribute("usuario_id", id);
+		model.addAttribute("admin",admin);
 				
 		return "checkups/mapa";
 	}
@@ -132,6 +147,21 @@ public class CheckUpController {
 		model.addAttribute("cidade", infos[2]);
 		
 		model.addAttribute("listaUsuarios", usuarioService.findByCidade(infos[2]));
+		
+		//Verificamos permissão do admin
+		boolean admin = false;
+		long id;
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if (principal instanceof DetalhesUsuario) {
+			id= ((DetalhesUsuario)principal).getUserId();
+			admin = ((DetalhesUsuario)principal).getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"));
+		} else {
+			id = 1;
+		}
+		
+		//Passamos id e permissões de usuário
+		model.addAttribute("usuario_id", id);
+		model.addAttribute("admin",admin);
 				
 		return "checkups/mapa";
 	}

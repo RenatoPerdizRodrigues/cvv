@@ -19,4 +19,7 @@ public interface UsuarioInterface {
 	
 	//Pega usuário por cidade
 	List<Usuario> findByCidade(String cidade);
+	
+	//Pega usuário por e-mail
+	Usuario findByEmail(String email);
 }

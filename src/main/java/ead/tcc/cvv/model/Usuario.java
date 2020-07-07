@@ -6,6 +6,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 
 @Entity
 @Table(name="usuarios")
@@ -15,31 +21,56 @@ public class Usuario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@Column(name = "nome") 
+	@Column(name = "nome")
+	@NotNull(message="Nome não deve ser nulo!")
+	@Size(min=3,max=55,message="Nome deve ter entre 3 e 55 caracteres!")
 	private String nome;
 
 	@Column(name = "email")
+	@NotNull(message="E-mail não deve ser nulo!")
+	@Size(min=3,max=55,message="E-mail deve ter entre 3 e 55 caracteres!")
+	@Email(message="E-mail deve ser válido!")
 	private String email;
 	
-	@Column(name = "senha")
+	@Column(name = "senha", unique = true)
+	@NotNull(message="Senha deve ser preenchida!")
+	@NotBlank(message="Senha deve ser preenchida!")
 	private String senha;
 	
 	@Column(name = "cpf")
+	@NotNull(message="CPF deve ser preenchido!")
+	@NotBlank(message="CPF deve ser preenchido!")
+	@Size(min=11,max=11,message="CPF deve ter 11 caracteres!")
 	private String cpf;
 	
 	@Column(name = "cidade")
+	@NotNull
+	@NotBlank
+	@Size(min=3,max=55)
 	private String cidade;
 	
 	@Column(name = "uf")
+	@NotNull
+	@NotBlank
+	@Size(min=2,max=55)
 	private String uf;
 	
 	@Column(name = "endereco")
+	@NotNull
+	@NotBlank
+	@Size(min=3,max=55)
 	private String endereco;
 	
 	@Column(name = "latitude")
+	@NotNull
+	@NotBlank
+	@Size(min=3,max=55)
 	private String latitude;
 	
 	@Column(name = "longitude")
+	@NotNull
+	@NotBlank
+	@Size(min=3,max=55)
 	private String longitude;
 	
 	@Column(name = "papel")

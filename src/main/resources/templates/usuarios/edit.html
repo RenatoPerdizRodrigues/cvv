@@ -6,7 +6,7 @@
 	<title>CVV</title>
 
 	<link th:href="@{/css/halfmoon.min.css}" rel="stylesheet" />
-	<script src="@{/js/halfmoon.min.js}" ></script>
+	<script th:src="@{/js/halfmoon.min.js}" ></script>
 	<link th:href="@{/css/styles.css}" rel="stylesheet" />
 	
 	<!--Mapa-->
@@ -31,18 +31,23 @@
         <form action="#" th:action="@{/store}" th:object="${usuario}", method="POST">
             <label for="Nome Completo">Nome Completo</label>
             <input class="form-control" type="text" th:field="*{nome}">
+            <span class="erro_val" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span><br>
             <label for="E-mail">E-mail</label>
             <input class="form-control" type="text" th:field="*{email}">
+            <span class="erro_val" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span><br>
             <label for="Senha">Senha</label>
             <input class="form-control" type="password" th:field="*{senha}" placeholder="Deixe em branco para não mudar...">
+            <span class="erro_val" th:if="${#fields.hasErrors('senha')}" th:errors="*{senha}"></span><br>
             <label for="CPF">CPF</label>
             <input class="form-control" type="text" th:field="*{cpf}">
+            <span class="erro_val" th:if="${#fields.hasErrors('cpf')}" th:errors="*{cpf}"></span><br>
             <label for="Endereço">Endereço</label>
             <input type="search" id="endereco" th:field="*{endereco}" placeholder="Digite para Buscar">
+            <span class="erro_val" th:if="${#fields.hasErrors('endereco')}" th:errors="*{endereco}"></span><br>
             <label for="Cidade">Cidade</label>
-            <input readonly class="form-control" id="cidade" type="text" th:field="*{cidade}" style="background-color: #e3e3e3" placeholder="Digite seu endereço acima...">
+            <input readonly class="form-control" id="cidade" type="text" th:field="*{cidade}" style="background-color: #e3e3e3" placeholder="Digite seu endereço acima..."><br>
             <label for="Estado">Estado</label>
-            <input readonly class="form-control" id="uf" type="text" th:field="*{uf}" style="background-color: #e3e3e3;" placeholder="Digite seu endereço acima...">
+            <input readonly class="form-control" id="uf" type="text" th:field="*{uf}" style="background-color: #e3e3e3;" placeholder="Digite seu endereço acima..."><br>
             <input class="form-control" type="hidden" id="lat" th:field="*{latitude}">
             <input class="form-control" type="hidden" id="long" th:field="*{longitude}">
             <input class="form-control" type="hidden" name="metodo" value="edicao">

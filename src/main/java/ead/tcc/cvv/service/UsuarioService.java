@@ -44,4 +44,16 @@ public class UsuarioService implements UsuarioInterface {
 	public List<Usuario> findByCidade(String cidade) {
 		return this.usuarioRepository.findByCidade(cidade);
 	}
+	
+	public Usuario findByEmail(String email) {
+		Optional<Usuario> optional = usuarioRepository.findByEmail(email);
+		Usuario usuario = null;
+		if(optional.isPresent()) {
+			usuario= optional.get();
+		} else {
+			return null;
+		}
+		
+		return usuario;
+	}
 }

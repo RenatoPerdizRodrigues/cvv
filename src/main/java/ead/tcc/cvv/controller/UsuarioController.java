@@ -1,7 +1,10 @@
 package ead.tcc.cvv.controller;
 
+import java.util.Optional;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -9,10 +12,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ead.tcc.cvv.model.DetalhesUsuario;
 import ead.tcc.cvv.model.Usuario;
@@ -65,7 +70,37 @@ public class UsuarioController {
 	}
 
 	@PostMapping("/store")
-	public String store(@ModelAttribute("usuario") Usuario usuario, final HttpServletRequest request) {
+	public String store(@Valid Usuario usuario, BindingResult bindingResult, final HttpServletRequest request, RedirectAttributes red) {
+
+		//Verificamos se é cadastro ou edição
+		String metodo = request.getParameter("metodo");
+		
+		//Caso seja edição, validamos mas deixamos passar a senha vazia e e-mail repetido
+		if(metodo.equals("edicao") && bindingResult.hasErrors()) {
+			
+			System.out.println(bindingResult.getErrorCount());
+			
+			if(bindingResult.getErrorCount() == 1 && bindingResult.getFieldError("senha") != null) {
+				//Tem erro apenas na senha
+			} else {
+				// Tem outros erros!
+				return "usuarios/edit";
+			}
+		}
+		
+		//Caso seja criação, precisa ter todos os campos e e-mail único
+		if (bindingResult.hasErrors() && metodo.equals("criacao")) {
+			return "usuarios/create";
+		}
+		
+		Usuario user_mail = usuarioService.findByEmail(request.getParameter("email"));
+		
+		if(metodo.equals("criacao") && user_mail instanceof Usuario && user_mail.getEmail().equals(request.getParameter("email"))) {
+			bindingResult.rejectValue("email", "error.usuario", "Este e-mail já está cadastrado!");
+			return "usuarios/create";
+		}
+		
+		
 		
 		//Definimos a senha usando nosso encoder BCrypt
 		if(request.getParameter("senha") != "") {
@@ -87,14 +122,14 @@ public class UsuarioController {
 	        //erro
 	    }
 		
-		//Verificamos se é cadastro ou edição
-		String metodo = request.getParameter("metodo");
 		
 		if(metodo.equals("edicao")) {
+			red.addFlashAttribute("success", "Usuário editado com sucesso!");
 			String id = request.getParameter("id");
 			return "redirect:/edit/" + id;
 		} else {
-			return "redirect:/";
+			red.addFlashAttribute("success", "Usuário cadastrado com sucesso!");
+			return "redirect:/login";
 		}
 		
 	}

@@ -5,7 +5,9 @@
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<a th:href="${usuario_id}">Seus Check-Ups</a>
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<a th:href="@{../edit/{usuario_id}(usuario_id=${usuario_id})}">Editar seu Cadastro</a>
+			<a>Mapa de Foco</a>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<a th:href="@{../edit/{usuario_id}(usuario_id=${usuario_id})}">Seu Cadastro</a>
 			<span th:if="${admin == true}">
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<a th:href="@{/checkups}">Todos CheckUps</a>
@@ -29,4 +31,17 @@
 			</form>
 		</div>
 	</div>
+	
+	<div class="col-md-4 offset-md-4" style="margin-top:1em;" th:if="${success}">
+		<div class="alert alert-success" role="alert">
+		  <button class="close" data-dismiss="alert" type="button" aria-label="Close">
+		    <span aria-hidden="true">&times;</span>
+		  </button>
+		  <h4 class="alert-heading">Sucesso!</h4>
+		  <ul th:each="msg : ${success}">
+		  	<li th:text="${msg}" />
+		  </ul>
+		</div>
+	</div>
+		
 </div>

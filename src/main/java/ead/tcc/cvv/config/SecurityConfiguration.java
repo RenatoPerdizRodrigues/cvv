@@ -46,7 +46,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 			//Rotas para ambos usuário e admin
 			.antMatchers("/edit/id").hasAnyRole("ADMIN", "USER")
 			.antMatchers("/checkups/{usuario_id}").hasAnyRole("ADMIN", "USER")
-			.antMatchers("/checkups/mapa/{cidade}").hasAnyRole("ADMIN", "USER")
+			.antMatchers("/checkups/mapa").hasAnyRole("ADMIN", "USER")
 			.antMatchers("/checkups/mapacidade").hasAnyRole("ADMIN", "USER")
 			.antMatchers("/checkups/create").hasAnyRole("ADMIN", "USER")
 			.antMatchers("/checkups/store").hasAnyRole("ADMIN", "USER")
