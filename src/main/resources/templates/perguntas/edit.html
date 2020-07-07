@@ -30,9 +30,13 @@
 		<h1>Editar Pergunta</h1>
         <form action="#" th:action="@{/perguntas/store}" th:object="${pergunta}", method="POST">
             <input type="hidden" th:field="*{id}"/>
-            <label for="Texto">Texto</label>
+            <label for="Texto">Texto da Pergunta</label>
             <input class="form-control" type="text" th:field="*{texto}">
-            <button class="btn btn-success">Save</button>
+            
+            <div class="text-right" style="margin-top:1em;">    
+                <a class="btn" th:href="@{/perguntas}">Voltar para Perguntas</a>
+            	<button class="btn btn-success">Salvar</button>
+            </div>
         </form>
 	</div>
 	

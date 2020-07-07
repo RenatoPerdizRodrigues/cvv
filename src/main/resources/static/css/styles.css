@@ -29,3 +29,8 @@ select{
 	  -moz-appearance: none!important;
 	  -webkit-appearance: none!important;
 }
+
+.btn-editar {
+	margin-left: 0.3em;
+	margin-bottom: 0.3em;
+}

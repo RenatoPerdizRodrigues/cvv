@@ -1,6 +1,7 @@
 package ead.tcc.cvv.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import ead.tcc.cvv.model.DetalhesUsuario;
 import ead.tcc.cvv.model.Resposta;
 import ead.tcc.cvv.service.RespostaService;
 
@@ -24,6 +26,17 @@ public class RespostaController {
 		Resposta resposta = new Resposta();
 		model.addAttribute("resposta", resposta);
 		
+		//Verificamos permissão do admin
+		boolean admin = false;
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if (principal instanceof DetalhesUsuario) {
+			admin = ((DetalhesUsuario)principal).getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"));
+		}
+		
+		//Passamos id e permissões de usuário
+		model.addAttribute("usuario_id", id);
+		model.addAttribute("admin",admin);
+
 		return "respostas/index";
 	}
 	

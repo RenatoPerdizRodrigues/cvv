@@ -28,11 +28,11 @@
 	
 	<div class="wrapper col-md-4 offset-md-4 formDiv" style="margin-top:2em">
 	    <div class="row">
-	        <div class="col-md-6">
+	        <div class="col-md-12">
 	            <form action="#" th:action="@{../respostas/store}" th:object="${resposta}", method="POST">
 	                <label for="Texto da Resposta">Texto da Resposta</label>
 	                <input class="form-control" type="text" th:field="*{texto}">
-	                <label for="Score">Score</label>
+	                <label for="Score">Score da Resposta (Pontuação relativa a Gravidade dos Sintomas)</label>
 	                <select class="form-control" th:field="*{score}">
 	                	<option value="1">1</option>
 	                	<option value="2">2</option>
@@ -45,13 +45,16 @@
 	                	<option value="9">9</option>
 	                	<option value="10">10</option>
 	                </select>
-	                <input class="form-control" type="text" name="pergunta_id" th:value="${cod_pergunta}">
-	                <button class="btn btn-success">Cadastrar</button>
+	                <input class="form-control" type="hidden" name="pergunta_id" th:value="${cod_pergunta}">
+	                
+	                <div class="text-right" style="margin-top:1em;">
+		                <a class="btn" th:href="@{/perguntas}">Voltar para Perguntas</a>
+		                <button class="btn btn-success">Cadastrar</button>
+		            </div>
 	            </form>
-	        </div>
 	    </div>
 	    
-		<div class="wrapper col-md-6 md-offset-2">
+		<div class="wrapper col-md-12">
 			<h1>Lista de Respostas</h1>
 			<table class="table table-stripped">
 				<thead>
