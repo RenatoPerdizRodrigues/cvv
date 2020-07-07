@@ -27,13 +27,36 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-		/*
+			//Rotas de admin
+			.antMatchers("/usuarios").hasRole("ADMIN")
+			.antMatchers("/delete/{id}").hasRole("ADMIN")
 			.antMatchers("/checkups").hasRole("ADMIN")
-			.antMatchers("/checkup/{id}").hasAnyRole("ADMIN", "USER")
-			.antMatchers("/create").hasRole("USER")
-		*/
+			.antMatchers("/checkups/delete/{id}").hasRole("ADMIN")
+			.antMatchers("/configs").hasRole("ADMIN")
+			.antMatchers("/config/store").hasRole("ADMIN")
+			.antMatchers("/perguntas").hasRole("ADMIN")
+			.antMatchers("/perguntas/create").hasRole("ADMIN")
+			.antMatchers("/perguntas/store").hasRole("ADMIN")
+			.antMatchers("/perguntas/edit/{id}").hasRole("ADMIN")
+			.antMatchers("/perguntas/delete/{id}").hasRole("ADMIN")
+			.antMatchers("/respostas/{id}").hasRole("ADMIN")
+			.antMatchers("/respostas/store").hasRole("ADMIN")
+			.antMatchers("/respostas/delete/{id}/{pergunta_id}").hasRole("ADMIN")
+			
+			//Rotas para ambos usuário e admin
+			.antMatchers("/edit/id").hasAnyRole("ADMIN", "USER")
+			.antMatchers("/checkups/{usuario_id}").hasAnyRole("ADMIN", "USER")
+			.antMatchers("/checkups/mapa/{cidade}").hasAnyRole("ADMIN", "USER")
+			.antMatchers("/checkups/mapacidade").hasAnyRole("ADMIN", "USER")
 			.antMatchers("/checkups/create").hasAnyRole("ADMIN", "USER")
+			.antMatchers("/checkups/store").hasAnyRole("ADMIN", "USER")
+			.antMatchers("/checkups/resultado/soma").hasAnyRole("ADMIN", "USER")
+			
+			//Rotas para todos os usuários deslogados
 			.antMatchers("/").permitAll()
+			.antMatchers("/login").permitAll()
+			.antMatchers("/cadastrar").permitAll()
+			.antMatchers("/store").permitAll()
 			.and().formLogin()
 				.defaultSuccessUrl("/checkups/create", true);
 		
