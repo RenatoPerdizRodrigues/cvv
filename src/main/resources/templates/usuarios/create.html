@@ -21,8 +21,7 @@
 		
 </head>
 <body>
-  <div class="page-wrapper with-navbar">
-	<div class="wrapper">
+  <div class="page-wrapper overflow-y-scroll with-navbar">
 	<!--Navbar-->
 	<div class="navbar">
 		<div class="col-md-9 offset-md-1">
@@ -38,6 +37,16 @@
 		<div class="col-md-6 offset-md-3 formDiv formLogin">
 			<h1>Criar Usuário</h1>
 			<form action="#" th:action="@{/store}" th:object="${usuario}", method="POST">
+				<h5>Vamos encontrar seu endereço para marcarmos seu check-up no mapa!</h5>
+	            <input type="search" id="endereco" th:field="*{endereco}" placeholder="Digite para Buscar"><br>
+	            <span class="erro_val" th:if="${#fields.hasErrors('endereco')}" th:errors="*{endereco}"><br></span>
+	            <br th:if="${#fields.hasErrors('endereco')}" />
+	            <br><input readonly class="form-control" id="cidade" type="text" th:field="*{cidade}" style="background-color: #e3e3e3" placeholder="Sua cidade será encontrada automaticamente">
+	            <br><input readonly class="form-control" id="uf" type="text" th:field="*{uf}" style="background-color: #e3e3e3;" placeholder="Sua cidade será encontrada automaticamente">
+
+	            <div class="sidebar-divider"style="margin-top:1em;margin-bottom:1em;"></div>
+	            
+	            <h5>Agora preencha suas informações de cadastro!</h5>
 	            <label for="Nome Completo">Nome Completo</label>
 	            <input class="form-control" type="text" th:field="*{nome}">
 	            <span class="erro_val" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
@@ -54,14 +63,6 @@
 	            <input class="form-control" type="text" th:field="*{cpf}">
 	            <span class="erro_val" th:if="${#fields.hasErrors('cpf')}" th:errors="*{cpf}"><br></span>
 	            <br th:if="${#fields.hasErrors('cpf')}" />
-	            <label for="Endereço">Endereço</label>
-	            <input type="search" id="endereco" th:field="*{endereco}" placeholder="Digite para Buscar">
-	            <span class="erro_val" th:if="${#fields.hasErrors('endereco')}" th:errors="*{endereco}"><br></span>
-	            <br th:if="${#fields.hasErrors('endereco')}" />
-	            <label for="Cidade">Cidade</label>
-	            <input readonly class="form-control" id="cidade" type="text" th:field="*{cidade}" style="background-color: #e3e3e3" placeholder="Digite seu endereço acima...">
-	            <label for="Estado">Estado</label>
-	            <input readonly class="form-control" id="uf" type="text" th:field="*{uf}" style="background-color: #e3e3e3;" placeholder="Digite seu endereço acima...">
 	            <input class="form-control" type="hidden" id="lat" th:field="*{latitude}">
 	            <input class="form-control" type="hidden" id="long" th:field="*{longitude}">
 	            <input class="form-control" type="hidden" name="metodo" value="criacao">
@@ -136,7 +137,7 @@
             }
         }
     </script>
-  </div>
   <script th:src="@{/js/halfmoon.min.js}" ></script>
+</div>
 </body>
 </html>
