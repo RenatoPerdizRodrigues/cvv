@@ -44,14 +44,14 @@
 		</div>
 
 	
-		<div class="col-md-8 offset-md-2" style="margin-top: 2em;">
+		<div class="col-12 col-md-8 offset-md-2 texto">
 			<h1>Sistema CVV</h1>
-			<p>Responda nosso questionário de sintomas de COVID-19 e nos ajude a pintar um mapa de foco na sua cidade e região! Você também terá uma noção
+			<p class="texto">Responda nosso questionário de sintomas de COVID-19 e nos ajude a pintar um mapa de foco na sua cidade e região! Você também terá uma noção
 		 	da gravidade de seu quadro e se deve procurar um médico</p>
 		</div>
 		
-		<div class="row" style="margin-top: 3em;">
-			<div class="col-md-3 offset-md-2 formDiv">
+		<div class="row formLogin">
+			<div class="col-md-3 offset-md-2 formDiv formLogin">
 				<h1>Login</h1>
 				<form action="#" th:action="@{/login}" method="POST">
 		            <label for="E-mail">E-mail</label>
@@ -65,7 +65,7 @@
 		            </div>
 		        </form>
 		    </div>
-		    <div class="col-md-3 offset-md-2" style="height: 300px;">
+		    <div class="col-md-3 offset-md-2 mapa" style="height: 300px;">
 		 		<img th:src="@{/images/map.png}"/>
 		    </div>
 		 </div>

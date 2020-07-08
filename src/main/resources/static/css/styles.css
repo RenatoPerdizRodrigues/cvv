@@ -69,3 +69,28 @@ function myFunction(x) {
 .btn-side{
 	margin-right:1em!important;
 }
+
+.texto {
+	margin-top: 2em;
+}
+
+.formLogin {
+	margin-top: 3em;
+}
+
+@media only screen and (max-width: 600px) {
+	.texto {
+		margin-top: 1em;
+		padding-left:1em;
+		padding-right:1em;
+	}
+	.formLogin {
+		margin-top: 0;
+	}
+	.formDiv {
+		margin:1em!important;
+	}
+	.mapa{
+		display:none;
+	}
+}
