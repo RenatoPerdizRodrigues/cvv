@@ -100,6 +100,9 @@ public class UsuarioController {
 			return "usuarios/create";
 		}
 		
+		//Colocamos a cidade em maíuscula
+		usuario.setCidade(request.getParameter("cidade").toUpperCase().replaceAll("[^a-zA-Z0-9]", ""));
+		
 		
 		
 		//Definimos a senha usando nosso encoder BCrypt
