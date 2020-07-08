@@ -31,13 +31,16 @@
 	<div th:replace="fragments/sidebar :: sidebar" />
 	</div>
     
-	
-	<div class="content-wrapper col-md-4 offset-md-4 formDiv text-center">
-        <h4>Seu Score foi <span th:text="${score}" /></h4>
-        <h3 th:text="${mensagem}" />
-        <hr>
-        <p>Nossa plataforma não busca substituir um diagnóstico médico!</p>
-    </div>
+    <div class="row formLogado text-center">
+		<div class="content-wrapper col-md-4 offset-md-3 formDiv formLogado">
+	        <h4>Seu Score foi <span th:text="${score}" /></h4>
+	        <h3 th:text="${mensagem}" />
+	        <hr>
+	        <p>Obrigado por registrar seus sintomas conosco, mas lembre-se:</p>
+	        <h5>Nossa plataforma não busca substituir um diagnóstico médico!</h5>
+	        <p>Busque ajuda profissional se achar necessário!</p>
+	    </div>
+	</div>
   </div>
   <script th:src="@{/js/halfmoon.min.js}" ></script>
 </body>

@@ -38,13 +38,19 @@
 				<thead>
 					<tr>
 						<th>Score</th>
+						<th>Usa máscara?</th>
+						<th>Faz isolamento?</th>
+						<th>Hiegniza as mãos?</th>
 						<th>Data</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:each="checkUp: ${listaCheckUps}">
-						<td th:text="${checkUp.id}"></td>
 						<td th:text="${checkUp.score}"></td>
+						<td th:text="${checkUp.mascara}"></td>
+						<td th:text="${checkUp.isolamento}"></td>
+						<td th:text="${checkUp.higiene}"></td>
+						<td th:text="${checkUp.data_checkup}"></td>
 					</tr>
 				</tbody>
 			</table>

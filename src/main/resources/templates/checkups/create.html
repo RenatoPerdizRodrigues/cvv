@@ -24,12 +24,38 @@
 	<div class="row formLogado">
 		<div class="content-wrapper col-md-6 offset-md-3 formDiv formLogado">
 			<h1>Fazer Check-up</h1>
+			<p class="texto">Vamos analisar seus sintomas em relação ao COVID para conhecermos melhor o risco de exposição na sua área!<p>
+			
+			
+            <div class="sidebar-divider"style="margin-top:1em;margin-bottom:1em;"></div>
+	            
+	        <h3>Sintomas</h3>    
 	        <form action="#" th:action="@{/checkups/store}" th:object="${checkup}", method="POST">
 	            <div th:each="pergunta, iStat : ${listaPerguntas}">
 	                <h4 th:text="${pergunta.texto}"/>
 	                <span th:each="resposta: ${listaRespostas}" th:if="${resposta.pergunta_id} == ${pergunta.id}">
 	                	<input required type="radio" th:value="${resposta.score}" th:name="${iStat.index}" /> ) <span th:text="${resposta.texto}" /><br>
 	                </span>
+	            </div>
+	            
+	            <div class="sidebar-divider"style="margin-top:1em;margin-bottom:1em;"></div>
+	            
+	            <h3>Hábitos</h3>
+	            <p class="texto">Estas perguntas extras não são relacionadas aos sintomas, mas nos ajudam a coletar informações sobre o risco da sua região! :) </p>
+	            <div>
+	            	<h4>Você está fazendo isolamento social?</h4>
+	            	<input required type="radio" value="1" name="isolamento"/> ) Sim <br>
+	            	<input required type="radio" value="0" name="isolamento"/> ) Não <br>
+	            </div>
+	            <div>
+	            	<h4>Você utiliza máscara ao sair de casa?</h4>
+	            	<input required type="radio" value="1" name="mascara"/> ) Sim <br>
+	            	<input required type="radio" value="0" name="mascara"/> ) Não <br>
+	            </div>
+	            <div>
+	            	<h4>Você realiza a higienização das mãos com frequência?</h4>
+	            	<input required type="radio" value="1" name="higiene"/> ) Sim <br>
+	            	<input required type="radio" value="0" name="higiene"/> ) Não <br>
 	            </div>
 	            <div class="text-right">
 	            	<button class="btn btn-success">Registrar Check-Up</button>

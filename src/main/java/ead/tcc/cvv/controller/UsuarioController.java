@@ -90,6 +90,7 @@ public class UsuarioController {
 		
 		//Caso seja criação, precisa ter todos os campos e e-mail único
 		if (bindingResult.hasErrors() && metodo.equals("criacao")) {
+			bindingResult.rejectValue("uf", "error.uf", "Por favor, verifique o endereço novamente para alterar as informações do formulário!");
 			return "usuarios/create";
 		}
 		
@@ -97,6 +98,8 @@ public class UsuarioController {
 		
 		if(metodo.equals("criacao") && user_mail instanceof Usuario && user_mail.getEmail().equals(request.getParameter("email"))) {
 			bindingResult.rejectValue("email", "error.usuario", "Este e-mail já está cadastrado!");
+			bindingResult.rejectValue("botao", "error.botao", "Por favor, verifique o endereço novamente para alterar as informações do formulário!");
+			
 			return "usuarios/create";
 		}
 		

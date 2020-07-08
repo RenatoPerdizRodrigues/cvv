@@ -20,6 +20,15 @@ public class CheckUp {
 	@Column(name = "score")
 	private long score;
 	
+	@Column(name = "higiene")
+	private String higiene;
+	
+	@Column(name = "mascara")
+	private String mascara;
+
+	@Column(name = "isolamento")
+	private String isolamento;
+	
 	@Column(name = "data_checkup")
 	private String data_checkup;
 
@@ -54,6 +63,29 @@ public class CheckUp {
 	public void setData_checkup(String data_checkup) {
 		this.data_checkup = data_checkup;
 	}
-	
+
+	public String getHigiene() {
+		return higiene;
+	}
+
+	public void setHigiene(String higiene) {
+		this.higiene = higiene;
+	}
+
+	public String getMascara() {
+		return mascara;
+	}
+
+	public void setMascara(String mascara) {
+		this.mascara = mascara;
+	}
+
+	public String getIsolamento() {
+		return isolamento;
+	}
+
+	public void setIsolamento(String isolamento) {
+		this.isolamento = isolamento;
+	}
 	
 }

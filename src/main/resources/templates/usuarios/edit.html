@@ -31,8 +31,8 @@
 	<div th:replace="fragments/sidebar :: sidebar" />
 	</div>
     
-	
-	<div class="content-wrapper col-md-4 offset-md-4 formDiv">
+	<div class="row formLogin">
+		<div class="col-md-6 offset-md-3 formDiv formLogin">
 		<h1>Editar suas Informações</h1>
         <form action="#" th:action="@{/store}" th:object="${usuario}", method="POST">
             <label for="Nome Completo">Nome Completo</label>
@@ -64,6 +64,7 @@
 	            <button id="cadastrador" style="display:none;" class="btn btn-success">Cadastrar</button>
 	        </div>
         </form>
+	</div>
 	</div>
 	    <script src="https://cdn.jsdelivr.net/npm/places.js@1.19.0"></script>
     <script>

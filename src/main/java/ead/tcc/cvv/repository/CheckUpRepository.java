@@ -17,9 +17,9 @@ import javax.persistence.Entity;
 
 @Repository
 public interface CheckUpRepository extends JpaRepository<CheckUp, Long>{
-	@Query(value="SELECT id, score, data_checkup, usuario_id FROM check_ups WHERE usuario_id = :UsuarioId",nativeQuery=true)
+	@Query(value="SELECT id, score, higiene, mascara, isolamento, data_checkup, usuario_id FROM check_ups WHERE usuario_id = :UsuarioId",nativeQuery=true)
 	public List<CheckUp> allByUsuario(@Param("UsuarioId") long id);
 	
-	@Query(value="SELECT id, score, data_checkup, usuario_id FROM check_ups WHERE usuario_id = :UsuarioId ORDER BY data_checkup ASC LIMIT 1",nativeQuery=true)
+	@Query(value="SELECT id, score, higiene, mascara, isolamento, data_checkup, usuario_id FROM check_ups WHERE usuario_id = :UsuarioId ORDER BY data_checkup ASC LIMIT 1",nativeQuery=true)
 	public Optional<CheckUp> lastlByUsuario(@Param("UsuarioId") long id);
 }
