@@ -21,13 +21,18 @@
 		
 </head>
 <body>
-  <div class="page-wrapper with-navbar">
-	<div class="wrapper">
+  <div data-sidebar-hidden="hidden" class="page-wrapper with-navbar with-sidebar with-transitions" data-sidebar-type="overlayed-all">
+  	
 	<!--Navbar-->
-	<div th:replace="fragments/navbar :: navbar">
-    </div>
+	<div th:replace="fragments/navbar :: navbar" >
+	</div>
+	
+	<!--Sidebar-->
+	<div th:replace="fragments/sidebar :: sidebar" />
+	</div>
     
-	<div class="col-md-6 offset-md-3 formDiv" style="margin-top:2em">
+	
+	<div class="content-wrapper col-md-4 offset-md-4 formDiv">
 		<h1>Lista de Usuários</h1>
 		<table class="table table-stripped">
 			<thead>
@@ -57,5 +62,6 @@
 	</div>
 	
   </div>
-</body>
+  <script th:src="@{/js/halfmoon.min.js}" ></script>
+</body>>
 </html>

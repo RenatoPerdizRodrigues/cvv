@@ -45,8 +45,16 @@ public class CheckUpService implements CheckUpInterface{
 	}
 	
 	@Override
-	public CheckUp getLastCheckUpUsuario(long id){
-		return this.checkupRepository.lastlByUsuario(id);
+	public long getLastCheckUpUsuario(long id){
+		Optional<CheckUp> optional = this.checkupRepository.lastlByUsuario(id);
+		CheckUp checkup = null;
+		if(optional.isPresent()) {
+			checkup = optional.get();
+			return checkup.getScore();
+		} else {
+			return 0;
+		}
+		
 	}
 
 	@Override

@@ -9,6 +9,7 @@ import ead.tcc.cvv.model.CheckUp;
 import ead.tcc.cvv.model.Usuario;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -20,5 +21,5 @@ public interface CheckUpRepository extends JpaRepository<CheckUp, Long>{
 	public List<CheckUp> allByUsuario(@Param("UsuarioId") long id);
 	
 	@Query(value="SELECT id, score, data_checkup, usuario_id FROM check_ups WHERE usuario_id = :UsuarioId ORDER BY data_checkup ASC LIMIT 1",nativeQuery=true)
-	public CheckUp lastlByUsuario(@Param("UsuarioId") long id);
+	public Optional<CheckUp> lastlByUsuario(@Param("UsuarioId") long id);
 }

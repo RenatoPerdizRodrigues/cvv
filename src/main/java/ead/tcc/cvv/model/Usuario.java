@@ -75,6 +75,9 @@ public class Usuario {
 	
 	@Column(name = "papel")
 	private String papel;
+	
+	//Coluna para guardar o score
+	private long score = 0;
 
 	public long getId() {
 		return id;
@@ -162,6 +165,14 @@ public class Usuario {
 
 	public void setPapel(String papel) {
 		this.papel = papel;
+	}
+	
+	public long getScore() {
+		return this.score;
+	}
+
+	public void setScore(long score) {
+		this.score = score;
 	}
 	
 	//Getters e setters	

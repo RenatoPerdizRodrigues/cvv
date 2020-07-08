@@ -109,15 +109,20 @@ public class CheckUpController {
 		List<Usuario> usuariosList = usuarioService.findByCidade("SAO PAULO");
 		model.addAttribute("listaUsuarios", usuariosList);
 		
-		//Loopamos os usuários para pegar o último check up deste usuário
-		for (int i = 0; i < usuariosList.size(); i++) {
-			long id= usuariosList.get(i).getId();
-			CheckUp last = checkUpService.getLastCheckUpUsuario(id);
-		}
-		
 		model.addAttribute("latitudeCentral", "-23.54");
 		model.addAttribute("longitudeCentral", "-46.63");
 		model.addAttribute("cidade", "SAO PAULO");
+		
+		List<Usuario> listaUser = usuarioService.findByCidade("SAO PAULO");
+		
+		//Pegamos o score do último checkup de cada usuário!
+		for(int i = 0; i < listaUser.size(); i++) {
+			Usuario loop = listaUser.get(i);
+			long score = checkUpService.getLastCheckUpUsuario(loop.getId());
+			listaUser.get(i).setScore(score);
+		}
+		
+		model.addAttribute("listaUsuarios", listaUser);
 		
 		//Verificamos permissão do admin
 		boolean admin = false;
@@ -146,7 +151,16 @@ public class CheckUpController {
 		model.addAttribute("longitudeCentral", infos[1]);
 		model.addAttribute("cidade", infos[2]);
 		
-		model.addAttribute("listaUsuarios", usuarioService.findByCidade(infos[2]));
+		List<Usuario> listaUser = usuarioService.findByCidade(infos[2]);
+		
+		//Pegamos o score do último checkup de cada usuário!
+		for(int i = 0; i < listaUser.size(); i++) {
+			Usuario loop = listaUser.get(i);
+			long score = checkUpService.getLastCheckUpUsuario(loop.getId());
+			listaUser.get(i).setScore(score);
+		}
+		
+		model.addAttribute("listaUsuarios", listaUser);
 		
 		//Verificamos permissão do admin
 		boolean admin = false;
@@ -246,6 +260,21 @@ public class CheckUpController {
 		}
 		
 		model.addAttribute("score", soma);
+		
+		//Verificamos permissão do admin
+		boolean admin = false;
+		long id;
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if (principal instanceof DetalhesUsuario) {
+			id= ((DetalhesUsuario)principal).getUserId();
+			admin = ((DetalhesUsuario)principal).getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"));
+		} else {
+			id = 1;
+		}
+		
+		//Passamos id e permissões de usuário
+		model.addAttribute("usuario_id", id);
+		model.addAttribute("admin",admin);
 		
 		return "checkups/resultado";
 	}

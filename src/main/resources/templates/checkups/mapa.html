@@ -21,20 +21,24 @@
 		
 </head>
 <body>
-  <div class="page-wrapper with-navbar">
-	<div class="wrapper">
+	<div data-sidebar-hidden="hidden" class="page-wrapper with-navbar with-sidebar with-transitions" data-sidebar-type="overlayed-all">
+	  	
 		<!--Navbar-->
-		<div th:replace="fragments/navbar :: navbar">
-	    </div>
+		<div th:replace="fragments/navbar :: navbar" >
+		</div>
+		
+		<!--Sidebar-->
+		<div th:replace="fragments/sidebar :: sidebar" />
+		</div>
 	    
-		<div class="col-md-8 offset-md-2" style="margin-top: 2em;">
+		<div class="col-md-8 offset-md-2" style="margin-top: 5em;">
 			<h1>Mapa de Foco da cidade de <span th:text="${cidade}"></h1>
 			<p>Observe os pontos de foco por cidade Brasileira!</p>
 			<input type="hidden" id="latitudeCentral" th:value="${latitudeCentral}"/>
 			<input type="hidden" id="longitudeCentral" th:value="${longitudeCentral}"/>
 		</div>
 				
-		<div class="row" style="margin-top: 3em; max-height:300px;">
+		<div class="row" style="max-height:300px;">
 			<div class="col-md-3 offset-md-2 formDiv">
 				<h3>Escolha outra cidade!</h3>
 				<form action="#" th:action="@{/checkups/mapacidade}" method="POST">
@@ -5595,6 +5599,7 @@
 		 <span th:each="usuario, iStat: ${listaUsuarios}">
 		 	<input type="hidden" th:id="lat+${iStat.index}" th:value="${usuario.latitude}">
 		 	<input type="hidden" th:id="long+${iStat.index}" th:value="${usuario.longitude}">
+		 	<input type="hidden" th:id="score+${iStat.index}" th:value="${usuario.score}">
 		 </span>
    	</div>
    	<script>
@@ -5635,6 +5640,9 @@
 	<script th:inline="javascript" th:each="usuario: ${listaUsuarios}">
 		var latitude = document.getElementById("lat" + loop).value;
 		var longitude = document.getElementById("long" + loop).value;
+		var score = document.getElementById("score" + loop).value;
+		
+		alert(score);
 		
 		loop++;
 		
@@ -5646,5 +5654,6 @@
 		}).addTo(map);
 	</script>
   </div>
-</body>
+  <script th:src="@{/js/halfmoon.min.js}" ></script>
+</body>>
 </html>

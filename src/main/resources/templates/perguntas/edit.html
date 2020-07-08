@@ -21,13 +21,18 @@
 		
 </head>
 <body>
-  <div class="page-wrapper with-navbar">
-	<div class="wrapper">
+  <div data-sidebar-hidden="hidden" class="page-wrapper with-navbar with-sidebar with-transitions" data-sidebar-type="overlayed-all">
+  	
 	<!--Navbar-->
-	<div th:replace="fragments/navbar :: navbar">
-    </div>
+	<div th:replace="fragments/navbar :: navbar" >
+	</div>
 	
-	<div class="wrapper col-md-4 offset-md-4 formDiv" style="margin-top:2em">
+	<!--Sidebar-->
+	<div th:replace="fragments/sidebar :: sidebar" />
+	</div>
+    
+	
+	<div class="content-wrapper col-md-4 offset-md-4 formDiv">
 		<h1>Editar Pergunta</h1>
         <form action="#" th:action="@{/perguntas/store}" th:object="${pergunta}", method="POST">
             <input type="hidden" th:field="*{id}"/>
@@ -42,5 +47,6 @@
 	</div>
 	
   </div>
-</body>
+  <script th:src="@{/js/halfmoon.min.js}" ></script>
+</body>>
 </html>
