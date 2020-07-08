@@ -40,3 +40,30 @@ select{
 	font-weight: bold;
 	margin-bottom:1em;
 }
+
+@media only screen and (max-width: 600px) {
+	.content-wrapper {
+		margin-left:0.5em;
+		margin-right:0.5em;
+	}
+	
+	.navbar-content {
+		display:block!important;
+	}
+	
+	.dropdown-menu {
+		display.block!important;
+	}
+}
+
+function myFunction(x) {
+  if (x.matches) { // If media query matches
+    document.body.style.backgroundColor = "yellow";
+  } else {
+    document.body.style.backgroundColor = "pink";
+  }
+}
+
+.btn-side {
+	margin-right:1em!important;
+}

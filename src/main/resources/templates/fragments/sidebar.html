@@ -1,0 +1,41 @@
+<div class="sidebar">
+  <div class="sidebar-menu">
+	  <div class="sidebar-content">
+			<button class="btn btn-action" type="button" onclick="halfmoon.toggleSidebar()">
+				<i class="fa fa-bars" aria-hidden="true"></i>
+				<span class="sr-only">Toggle sidebar</span> <!-- sr-only = show only on screen readers -->
+			</button>
+		</div>
+  </div>
+</div>
+
+<div class="sidebar" th:fragment="sidebar">
+  <div class="sidebar-menu">
+  	<div class="text-right btn-side navbar-content">
+	  	<button class="btn btn-action" type="button" onclick="halfmoon.toggleSidebar()">
+			<i class="fa fa-bars" aria-hidden="true"></i>
+			<span class="sr-only">Toggle sidebar</span> <!-- sr-only = show only on screen readers -->
+		</button>
+	</div>
+    <a href="#" class="sidebar-brand">
+      CVV
+    </a>
+    <div class="sidebar-divider"></div>
+    <a th:href="@{/checkups/create}" class="nav-link">Fazer Check-Up</a>
+    <div class="sidebar-divider"></div>
+	<a th:href="@{../checkups/{usuario_id}(usuario_id=${usuario_id})}" class="nav-link">Seus Checkups</a>
+    <div class="sidebar-divider"></div>
+	<a th:href="@{/checkups/mapa}" class="nav-link">Mapa de Foco</a>
+    <div class="sidebar-divider"></div>
+	<a th:href="@{/edit/{usuario_id}(usuario_id=${usuario_id})}" class="nav-link">Seu Cadastro</a>
+    <div class="sidebar-divider"></div>
+	<a th:href="@{/checkups}" class="nav-link">Todos CheckUps</a>
+    <div class="sidebar-divider"></div>
+	<a th:href="@{/usuarios}" class="nav-link">Todos Usuários</a>
+    <div class="sidebar-divider"></div>
+	<a th:href="@{/perguntas}" class="nav-link">Editar Perguntas</a>
+    <div class="sidebar-divider"></div>
+	<a th:href="@{/configs}" class="nav-link">Editar Configurações</a>
+    <div class="sidebar-divider"></div>
+  </div>
+</div>

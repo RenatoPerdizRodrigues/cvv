@@ -1,36 +1,54 @@
-<div th:fragment="navbar">
-	<div class="navbar">
-		<div class="col-md-9 offset-md-1">
-			<a href="/checkups/create">Fazer Check-Up</a>
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<a th:href="${usuario_id}">Seus Check-Ups</a>
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<a th:href="@{/checkups/mapa}">Mapa de Foco</a>
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<a th:href="@{../edit/{usuario_id}(usuario_id=${usuario_id})}">Seu Cadastro</a>
-			<span th:if="${admin == true}">
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<a th:href="@{/checkups}">Todos CheckUps</a>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<a th:href="@{/usuarios}">Todos Usuários</a>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<a th:href="@{/perguntas}">Editar Perguntas</a>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<a th:href="@{/configs}">Editar Configurações</a>
-			</span>
+	<nav th:fragment="navbar" class="navbar justify-content-center">
+
+		<div class="navbar-content justify-content-left" style="display:none">
+			<button class="btn btn-action" type="button" onclick="halfmoon.toggleSidebar()">
+				<i class="fa fa-bars" aria-hidden="true"></i>
+				<span class="sr-only">Toggle sidebar</span> <!-- sr-only = show only on screen readers -->
+			</button>
 		</div>
-		<div class="text-right">
+
+		<ul class="navbar-nav d-none d-md-flex"> <!-- d-none = display: none, d-md-flex = display: flex on medium screens and up (width > 768px) -->
+			<li class="nav-item">
+				<a th:href="@{/checkups/create}" class="nav-link">Fazer Check-Up</a>
+			</li>
+			<li class="nav-item">
+				<a th:href="@{../checkups/{usuario_id}(usuario_id=${usuario_id})}" class="nav-link">Seus Check-Ups</a>
+			</li>
+			<li class="nav-item">
+				<a th:href="@{/checkups/mapa}" class="nav-link">Mapa de Foco</a>
+			</li>
+			<li class="nav-item">
+				<a th:href="@{/edit/{usuario_id}(usuario_id=${usuario_id})}" class="nav-link">Seu Cadastro</a>
+			</li>
+			<li class="nav-item" th:if="${admin == true}">
+				<a th:href="@{/checkups}" class="nav-link">Todos CheckUps</a>
+			</li>
+			<li class="nav-item" th:if="${admin == true}">
+				<a th:href="@{/usuarios}" class="nav-link">Todos Usuários</a>
+			</li>
+			<li class="nav-item" th:if="${admin == true}">
+				<a th:href="@{/perguntas}" class="nav-link">Editar Perguntas</a>
+			</li>
+			<li class="nav-item" th:if="${admin == true}">
+				<a th:href="@{/configs}" class="nav-link">Editar Configurações</a>
+			</li>
+			<li class="nav-item" th:if="${admin == true}">
+				<form action="/logout" method=post style="margin-top:0.5em;">
+				    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+				    <button class="btn btn-danger" type="submit" value="logout">
+				    	Sair
+				    </button>
+				</form>
+			</li>
+		</ul>
 		
-		</div>
-		<div class="text-right">
-			<form action="/logout" method=post>
-			    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-			    <button class="btn btn-danger" type="submit" value="logout">
-			    	<i class="fa fa-power-off"></i>
-			    </button>
-			</form>
-		</div>
-	</div>
+	</nav>
+	
+	<div class="sidebar">
+      <div class="sidebar-menu">
+        
+      </div>
+    </div>
 	
 	<div class="col-md-4 offset-md-4" style="margin-top:1em;" th:if="${success}">
 		<div class="alert alert-success" role="alert">
@@ -53,5 +71,3 @@
 	  	<li th:text="${msg}" />
 	  </ul>
 	</div>
-		
-</div>
