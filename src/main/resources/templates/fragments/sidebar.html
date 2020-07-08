@@ -18,13 +18,13 @@
     <div class="sidebar-divider"></div>
 	<a th:href="@{/edit/{usuario_id}(usuario_id=${usuario_id})}" class="nav-link">Seu Cadastro</a>
     <div class="sidebar-divider"></div>
-	<a th:href="@{/checkups}" class="nav-link">Todos CheckUps</a>
-    <div class="sidebar-divider"></div>
-	<a th:href="@{/usuarios}" class="nav-link">Todos Usuários</a>
-    <div class="sidebar-divider"></div>
-	<a th:href="@{/perguntas}" class="nav-link">Editar Perguntas</a>
-    <div class="sidebar-divider"></div>
-	<a th:href="@{/configs}" class="nav-link">Editar Configurações</a>
+	<a  th:if="${admin == true}" th:href="@{/checkups}" class="nav-link">Todos CheckUps</a>
+    <div th:if="${admin == true}" class="sidebar-divider"></div>
+	<a th:if="${admin == true}" th:href="@{/usuarios}" class="nav-link">Todos Usuários</a>
+    <div th:if="${admin == true}" class="sidebar-divider"></div>
+	<a th:if="${admin == true}" th:href="@{/perguntas}" class="nav-link">Editar Perguntas</a>
+    <div th:if="${admin == true}" class="sidebar-divider"></div>
+	<a th:if="${admin == true}" th:href="@{/configs}" class="nav-link">Editar Configurações</a>
 	<form action="/logout" method=post style="margin-left:1em;margin-top:0.5em;">
 	    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 	    <button class="btn btn-danger" type="submit" value="logout">
