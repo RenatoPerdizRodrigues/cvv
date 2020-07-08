@@ -96,4 +96,7 @@ function myFunction(x) {
 	.mapa{
 		display:none;
 	}
+	.mapaMobile{
+		margin:2em!important;
+	}
 }

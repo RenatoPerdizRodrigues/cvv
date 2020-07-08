@@ -31,9 +31,9 @@
 		<div th:replace="fragments/sidebar :: sidebar" />
 		</div>
 	    
-		<div class="col-md-8 offset-md-2" style="margin-top: 5em;">
+		<div class="col-md-8 offset-md-2 texto formLogado">
 			<h1>Mapa de Foco da cidade de <span th:text="${cidade}"></h1>
-			<p>Observe os pontos de foco por cidade Brasileira!</p>
+			<p class="texto">Observe os pontos de foco por cidade Brasileira!</p>
 			<input type="hidden" id="latitudeCentral" th:value="${latitudeCentral}"/>
 			<input type="hidden" id="longitudeCentral" th:value="${longitudeCentral}"/>
 			<input type="hidden" id="pontuacao_branda" th:value="${pontuacao_branda}"/>
@@ -41,7 +41,7 @@
 			<input type="hidden" id="pontuacao_grave" th:value="${pontuacao_grave}"/>
 		</div>
 				
-		<div class="row" style="max-height:300px;">
+		<div class="row mapaMobile" style="max-height:300px;">
 			<div class="col-md-3 offset-md-2 formDiv">
 				<h3>Escolha outra cidade!</h3>
 				<form action="#" th:action="@{/checkups/mapacidade}" method="POST">

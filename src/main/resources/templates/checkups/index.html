@@ -31,23 +31,24 @@
 	<div th:replace="fragments/sidebar :: sidebar" />
 	</div>
     
-	
-	<div class="content-wrapper col-md-4 offset-md-4 formDiv">
-		<h1>Lista de Checkups</h1>
-		<table class="table table-stripped">
-			<thead>
-				<tr>
-					<th>Score</th>
-					<th>Data</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="checkUp: ${listaCheckUps}">
-					<td th:text="${checkUp.id}"></td>
-					<td th:text="${checkUp.score}"></td>
-				</tr>
-			</tbody>
-		</table>
+	<div class="row formLogado">
+		<div class="content-wrapper col-md-4 offset-md-4 formDiv formLogado">
+			<h1>Lista de Checkups</h1>
+			<table class="table table-stripped">
+				<thead>
+					<tr>
+						<th>Score</th>
+						<th>Data</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="checkUp: ${listaCheckUps}">
+						<td th:text="${checkUp.id}"></td>
+						<td th:text="${checkUp.score}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
 	
   </div>
