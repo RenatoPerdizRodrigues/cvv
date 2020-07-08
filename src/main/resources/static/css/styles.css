@@ -87,6 +87,9 @@ function myFunction(x) {
 	.formLogin {
 		margin-top: 0;
 	}
+	.formLogado {
+		margin-top: 4em!important;
+	}
 	.formDiv {
 		margin:1em!important;
 	}

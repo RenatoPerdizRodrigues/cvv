@@ -21,20 +21,21 @@
 	<div th:replace="fragments/sidebar :: sidebar" />
 	</div>
     
-	
-	<div class="content-wrapper col-md-4 offset-md-4 formDiv">
-		<h1>Fazer Check-up</h1>
-        <form action="#" th:action="@{/checkups/store}" th:object="${checkup}", method="POST">
-            <div th:each="pergunta, iStat : ${listaPerguntas}">
-                <h4 th:text="${pergunta.texto}"/>
-                <span th:each="resposta: ${listaRespostas}" th:if="${resposta.pergunta_id} == ${pergunta.id}">
-                	<input required type="radio" th:value="${resposta.score}" th:name="${iStat.index}" /> ) <span th:text="${resposta.texto}" /><br>
-                </span>
-            </div>
-            <div class="text-right">
-            	<button class="btn btn-success">Registrar Check-Up</button>
-            </div>
-        </form>
+	<div class="row formLogado">
+		<div class="content-wrapper col-md-6 offset-md-3 formDiv formLogado">
+			<h1>Fazer Check-up</h1>
+	        <form action="#" th:action="@{/checkups/store}" th:object="${checkup}", method="POST">
+	            <div th:each="pergunta, iStat : ${listaPerguntas}">
+	                <h4 th:text="${pergunta.texto}"/>
+	                <span th:each="resposta: ${listaRespostas}" th:if="${resposta.pergunta_id} == ${pergunta.id}">
+	                	<input required type="radio" th:value="${resposta.score}" th:name="${iStat.index}" /> ) <span th:text="${resposta.texto}" /><br>
+	                </span>
+	            </div>
+	            <div class="text-right">
+	            	<button class="btn btn-success">Registrar Check-Up</button>
+	            </div>
+	        </form>
+	    </div>
     </div>
     
   </div>
