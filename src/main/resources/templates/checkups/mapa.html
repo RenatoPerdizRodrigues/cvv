@@ -36,6 +36,9 @@
 			<p>Observe os pontos de foco por cidade Brasileira!</p>
 			<input type="hidden" id="latitudeCentral" th:value="${latitudeCentral}"/>
 			<input type="hidden" id="longitudeCentral" th:value="${longitudeCentral}"/>
+			<input type="hidden" id="pontuacao_branda" th:value="${pontuacao_branda}"/>
+			<input type="hidden" id="pontuacao_media" th:value="${pontuacao_media}"/>
+			<input type="hidden" id="pontuacao_grave" th:value="${pontuacao_grave}"/>
 		</div>
 				
 		<div class="row" style="max-height:300px;">
@@ -5642,16 +5645,33 @@
 		var longitude = document.getElementById("long" + loop).value;
 		var score = document.getElementById("score" + loop).value;
 		
-		alert(score);
+		//Pegamos as pontuações
+		var branda = document.getElementById("pontuacao_branda").value;
+		var media = document.getElementById("pontuacao_media").value;
+		var grave = document.getElementById("pontuacao_grave").value;
 		
+		if(score >= grave){
+			var cor = 'red';
+			var fill = '#f03'
+		} else if (score < grave && score >= media){
+			var cor = 'yellow';
+			var fill = '#bec400';
+		} else {
+			var cor = 'blue';
+			var fill = '#5e16c9';
+		}
+
 		loop++;
+
+		if(score > 0){
+			var circle = L.circle([latitude, longitude], {
+				color: fill,
+				fillColor: cor,
+				fillOpacity: 0.5,
+				radius: 500
+			}).addTo(map);
+		}
 		
-		var circle = L.circle([latitude, longitude], {
-		    color: 'red',
-		    fillColor: '#f03',
-		    fillOpacity: 0.5,
-		    radius: 500
-		}).addTo(map);
 	</script>
   </div>
   <script th:src="@{/js/halfmoon.min.js}" ></script>

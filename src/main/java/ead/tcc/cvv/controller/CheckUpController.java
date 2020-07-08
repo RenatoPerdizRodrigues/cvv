@@ -162,6 +162,12 @@ public class CheckUpController {
 		
 		model.addAttribute("listaUsuarios", listaUser);
 		
+		//Pegamos quais os valores são considerados brandos, médios e graves
+		Config config = configService.getConfig(1);
+		model.addAttribute("pontuacao_branda", config.getPontuacao_branda());
+		model.addAttribute("pontuacao_media", config.getPontuacao_media());
+		model.addAttribute("pontuacao_grave", config.getPontuacao_grave());
+		
 		//Verificamos permissão do admin
 		boolean admin = false;
 		long id;
