@@ -36,6 +36,21 @@
 	<a th:href="@{/perguntas}" class="nav-link">Editar Perguntas</a>
     <div class="sidebar-divider"></div>
 	<a th:href="@{/configs}" class="nav-link">Editar Configurações</a>
+	<form action="/logout" method=post style="margin-left:1em;margin-top:0.5em;">
+	    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+	    <button class="btn btn-danger" type="submit" value="logout">
+	    	Sair
+	    </button>
+	</form>
     <div class="sidebar-divider"></div>
   </div>
 </div>
+
+<li class="nav-item" th:if="${admin == true}">
+				<form action="/logout" method=post style="margin-top:0.5em;">
+				    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+				    <button class="btn btn-danger" type="submit" value="logout">
+				    	Sair
+				    </button>
+				</form>
+			</li>
