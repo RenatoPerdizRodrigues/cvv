@@ -258,7 +258,7 @@ public class CheckUpController {
 		if(soma <= scoreBrando && soma > (long) 0) {
 			model.addAttribute("mensagem", config.getMensagem_branda());
 		} else if(soma == 0) {
-			model.addAttribute("mensagem", "Parabéns, você não apresenta sintomas! Não deixe de se previnir!");
+			model.addAttribute("mensagem", "Parabéns, você não apresenta sintomas! Não deixe de se prevenir!");
 		} else if(soma >= scoreBrando && soma < scoreGrave) {
 			model.addAttribute("mensagem", config.getMensagem_media());
 		} else if(soma >= scoreGrave) {
