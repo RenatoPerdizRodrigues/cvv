@@ -104,7 +104,7 @@ public class UsuarioController {
 		}
 		
 		//Colocamos a cidade em maíuscula
-		usuario.setCidade(request.getParameter("cidade").toUpperCase().replaceAll("[^a-zA-Z0-9]", ""));
+		usuario.setCidade(request.getParameter("cidade").toUpperCase());
 		
 		
 		
