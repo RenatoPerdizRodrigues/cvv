@@ -98,7 +98,7 @@ public class UsuarioController {
 		
 		if(metodo.equals("criacao") && user_mail instanceof Usuario && user_mail.getEmail().equals(request.getParameter("email"))) {
 			bindingResult.rejectValue("email", "error.usuario", "Este e-mail já está cadastrado!");
-			bindingResult.rejectValue("botao", "error.botao", "Por favor, verifique o endereço novamente para alterar as informações do formulário!");
+			bindingResult.rejectValue("uf", "error.uf", "Por favor, verifique o endereço novamente para alterar as informações do formulário!");
 			
 			return "usuarios/create";
 		}
@@ -134,7 +134,7 @@ public class UsuarioController {
 			String id = request.getParameter("id");
 			return "redirect:/edit/" + id;
 		} else {
-			red.addFlashAttribute("success", "Usuário cadastrado com sucesso!");
+			red.addFlashAttribute("success", "Você se cadastrou com sucesso! Por favor, se logue utilizand o e-mail e a senha definidos.");
 			return "redirect:/login";
 		}
 		

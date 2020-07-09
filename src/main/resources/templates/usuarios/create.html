@@ -37,43 +37,42 @@
 		<div class="col-md-6 offset-md-3 formDiv formLogin">
 			<h1>Criar Usuário</h1>
 			<form action="#" th:action="@{/store}" th:object="${usuario}", method="POST">
-				<h5>Vamos encontrar seu endereço para marcarmos seu check-up no mapa!</h5>
-	            <input type="search" id="endereco" th:field="*{endereco}" placeholder="Digite para Buscar"><br>
-	            <span class="erro_val" th:if="${#fields.hasErrors('endereco')}" th:errors="*{endereco}"><br></span>
-	            <br th:if="${#fields.hasErrors('endereco')}" />
-	            <br><input readonly class="form-control" id="cidade" type="text" th:field="*{cidade}" style="background-color: #e3e3e3" placeholder="Sua cidade será encontrada automaticamente">
-	            <br><input readonly class="form-control" id="uf" type="text" th:field="*{uf}" style="background-color: #e3e3e3;" placeholder="Sua cidade será encontrada automaticamente">
-
+				<h5>Preencha suas informações!</h5>
 				<div class="text-right" style="margin-top:1em;">
-				    <button id="verificador" type="button" onclick="verificaEndereco()" class="btn btn-success">Verificar Endereço</button>
 				</div>
-				<span class="erro_val" th:if="${#fields.hasErrors('*')}" th:errors="*{uf}"></span>
 				
 	            <div class="sidebar-divider"style="margin-top:1em;margin-bottom:1em;"></div>
 	            
-	            <h5 id="infos" style="display:none;">Agora preencha suas informações de cadastro!</h5>
 	            <label for="Nome Completo">Nome Completo</label>
-	            <input id="nome" required disabled class="form-control" type="text" th:field="*{nome}">
+	            <input id="nome" required class="form-control" type="text" th:field="*{nome}">
 	            <span class="erro_val" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
 	            <br th:if="${#fields.hasErrors('nome')}" />
 	            <label for="E-mail">E-mail</label>
-	            <input id="email" required disabled class="form-control" type="text" th:field="*{email}">
+	            <input id="email" required class="form-control" type="text" th:field="*{email}">
 	            <span class="erro_val" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
 	            <br th:if="${#fields.hasErrors('email')}" />
 	            <label for="Senha">Senha</label>
-	            <input id="senha" required disabled class="form-control" type="password" th:field="*{senha}">
+	            <input id="senha" required class="form-control" type="password" th:field="*{senha}">
 	            <span class="erro_val" th:if="${#fields.hasErrors('senha')}" th:errors="*{senha}"></span>
 	            <br th:if="${#fields.hasErrors('senha')}" />
 	            <label for="CPF">CPF</label>
-	            <input id="cpf" required disabled class="form-control" type="text" th:field="*{cpf}">
+	            <input id="cpf" required class="form-control" type="text" pattern="\d*" maxlength="11" th:field="*{cpf}">
 	            <span class="erro_val" th:if="${#fields.hasErrors('cpf')}" th:errors="*{cpf}"><br></span>
+	            <label for="Endereço">Endereço</label>
+	            <input type="search" id="endereco" th:field="*{endereco}" placeholder="Digite para Buscar">
+	            <span class="erro_val" th:if="${#fields.hasErrors('endereco')}" th:errors="*{endereco}"></span><br>
+	            <label for="Cidade">Cidade</label>
+	            <input readonly class="form-control" id="cidade" type="text" th:field="*{cidade}" style="background-color: #e3e3e3" placeholder="Digite seu endereço acima...">
+	            <label for="Estado">Estado</label>
+	            <input readonly class="form-control" id="uf" type="text" th:field="*{uf}" style="background-color: #e3e3e3;" placeholder="Digite seu endereço acima..."><br>
 	            <br th:if="${#fields.hasErrors('cpf')}" />
 	            <input class="form-control" type="hidden" id="lat" th:field="*{latitude}">
 	            <input class="form-control" type="hidden" id="long" th:field="*{longitude}">
 	            <input class="form-control" type="hidden" name="metodo" value="criacao">
 	
 				<div class="text-right" style="margin-top:1em;">
-		            <button id="cadastrador" disabled class="btn btn-success">Cadastrar</button>
+				    <button id="verificador" type="button" onclick="verificaEndereco()" class="btn btn-success">Verificar Endereço</button>
+		            <button id="cadastrador" style="display:none;" class="btn btn-success">Cadastrar</button>
 		        </div>
 	        </form>
 	    </div>
@@ -127,6 +126,7 @@
             var senha = document.getElementById("senha");
             var cpf = document.getElementById("cpf");
             var infos = document.getElementById("infos");
+            var infos2 = document.getElementById("infos2");
             
             //Botões pra mostrar ou esconder
             var cadastrador = document.getElementById("cadastrador");
@@ -140,18 +140,12 @@
                 cidade.value = '';
                 uf.value = '';
                 
-
-                
-                cadastrador.disabled = true;
+                cadastrador.style.display = "none";
                 verificador.style.display = "inline-block";
             } else {
-                cadastrador.disabled = false;
-                nome.disabled = false;
-                email.disabled = false;
-                senha.disabled = false;
-                cpf.disabled = false;
+            	alert('Endereço ok! Clique em "Cadastrar".');
+                cadastrador.style.display = "inline-block";
                 verificador.style.display = "none";
-                infos.style.display = 'block';
             }
         }
     </script>
