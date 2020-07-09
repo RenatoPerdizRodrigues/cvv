@@ -58,7 +58,7 @@ public class Usuario {
 	@Column(name = "endereco")
 	@NotNull
 	@NotBlank
-	@Size(min=3,max=55)
+	@Size(min=3,max=255)
 	private String endereco;
 	
 	@Column(name = "latitude")
