@@ -243,10 +243,10 @@ public class CheckUpController {
 		
 		checkUpService.saveCheckUp(checkup);
 		
-		return "redirect:/checkups/resultado/" + soma;
+		return "redirect:/resultado/" + soma;
 	}
 	
-	@GetMapping("checkups/resultado/{soma}")
+	@GetMapping("resultado/{soma}")
 	public String resultado(@PathVariable(value = "soma") long soma, Model model) {
 		//Analisamos o score final e retornamos a mensagem adequada
 		Config config = configService.getConfig(1);
@@ -254,9 +254,11 @@ public class CheckUpController {
 		long scoreGrave = config.getPontuacao_grave();
 		long scoreMedio = config.getPontuacao_media();
 		long scoreBrando = config.getPontuacao_branda();
-		
-		if(soma < scoreBrando) {
+				
+		if(soma <= scoreBrando && soma > (long) 0) {
 			model.addAttribute("mensagem", config.getMensagem_branda());
+		} else if(soma == 0) {
+			model.addAttribute("mensagem", "Parabéns, você não apresenta sintomas! Não deixe de se previnir!");
 		} else if(soma >= scoreBrando && soma < scoreGrave) {
 			model.addAttribute("mensagem", config.getMensagem_media());
 		} else if(soma >= scoreGrave) {

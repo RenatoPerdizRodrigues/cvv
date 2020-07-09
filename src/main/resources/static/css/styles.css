@@ -78,6 +78,10 @@ function myFunction(x) {
 	margin-top: 0em;
 }
 
+.formMapa {
+	margin-top:5em;
+}
+
 @media only screen and (max-width: 600px) {
 	.texto {
 		margin-top: 1em;
@@ -98,5 +102,8 @@ function myFunction(x) {
 	}
 	.mapaMobile{
 		margin:2em!important;
+	}
+	.formMapa {
+		margin-top:0em;
 	}
 }
