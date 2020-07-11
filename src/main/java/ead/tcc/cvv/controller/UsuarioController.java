@@ -33,7 +33,7 @@ public class UsuarioController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-    //Display a list of employees
+    //Mostramos os usuários
 	@GetMapping("/usuarios")
 	public String viewHomePage(Model model) {
 		model.addAttribute("listaUsuarios", usuarioService.getAllUsuarios());
@@ -62,6 +62,7 @@ public class UsuarioController {
 		return "usuarios/index";
 	}
 	
+	//Retornamos a view de usuários
 	@GetMapping("/cadastrar")
 	public String create(Model model) {
 		Usuario usuario = new Usuario();
@@ -88,12 +89,13 @@ public class UsuarioController {
 			}
 		}
 		
-		//Caso seja criação, precisa ter todos os campos e e-mail único
+		//Caso seja criação, precisa ter todos os campos e todos devem ser válidos
 		if (bindingResult.hasErrors() && metodo.equals("criacao")) {
 			bindingResult.rejectValue("uf", "error.uf", "Por favor, verifique o endereço novamente para alterar as informações do formulário!");
 			return "usuarios/create";
 		}
 		
+		//Verificamos se o e-mail é único
 		Usuario user_mail = usuarioService.findByEmail(request.getParameter("email"));
 		
 		if(metodo.equals("criacao") && user_mail instanceof Usuario && user_mail.getEmail().equals(request.getParameter("email"))) {

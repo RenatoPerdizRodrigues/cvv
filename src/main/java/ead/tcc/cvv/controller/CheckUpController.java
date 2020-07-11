@@ -219,12 +219,14 @@ public class CheckUpController {
 	@PostMapping("/checkups/store")
 	public String store(@ModelAttribute("checkups") CheckUp checkup, final HttpServletRequest request, Model model) {
 		
+		//Formatamos a data
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date();
 		checkup.setData_checkup(dateFormat.format(date));
 		
 		long id;
 		
+		//Pergamos o usuário logado para salvar seu ID
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		if (principal instanceof DetalhesUsuario) {
 			id= ((DetalhesUsuario)principal).getUserId();
@@ -232,15 +234,19 @@ public class CheckUpController {
 			id = 1;
 		}
 		
+		//Definimos o ID do usuário		
 		checkup.setUsuario_id(id);
 		
+		//Rodamos as respostas do questionário para somar seu resultado final
 		long soma = 0;
 		for(long i = 0; i < perguntaService.countPerguntas(); i++) {
 			soma = soma + Long.parseLong(request.getParameter(Long.toString(i)));
 		}
 
+		//Declarmaos sua soma
 		checkup.setScore(soma);
 		
+		//Savamos o objeto Check Up
 		checkUpService.saveCheckUp(checkup);
 		
 		return "redirect:/resultado/" + soma;

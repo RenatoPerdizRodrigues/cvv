@@ -5650,16 +5650,22 @@
 		var media = document.getElementById("pontuacao_media").value;
 		var grave = document.getElementById("pontuacao_grave").value;
 		
-		if(score >= grave){
-			var cor = 'red';
-			var fill = '#f03'
-		} else if (score < grave && score >= media){
-			var cor = 'yellow';
-			var fill = '#bec400';
-		} else {
+		if(score < branda){
 			var cor = 'blue';
 			var fill = '#5e16c9';
+		} else if(score >= branda && score < media){
+			var cor = 'yellow';
+			var fill = '#bec400';
+		} else if(score >= media && score < grave{
+			var cor = 'orange';
+			var fill = '#ff9b21';
+		} else{
+			var cor = 'red';
+			var fill = '#f03'
 		}
+		
+		
+			
 
 		loop++;
 
