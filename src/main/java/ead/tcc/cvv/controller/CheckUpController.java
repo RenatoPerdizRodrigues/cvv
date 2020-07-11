@@ -106,14 +106,14 @@ public class CheckUpController {
 	public String mapa(Model model) {
 		
 		//Listamos os usuários de SP
-		List<Usuario> usuariosList = usuarioService.findByCidade("SAO PAULO");
+		List<Usuario> usuariosList = usuarioService.findByCidade("SÃO PAULO");
 		model.addAttribute("listaUsuarios", usuariosList);
 		
 		model.addAttribute("latitudeCentral", "-23.54");
 		model.addAttribute("longitudeCentral", "-46.63");
-		model.addAttribute("cidade", "SAO PAULO");
-		
-		List<Usuario> listaUser = usuarioService.findByCidade("SAO PAULO");
+		model.addAttribute("cidade", "SÃO PAULO");
+				
+		List<Usuario> listaUser = usuarioService.findByCidade("SÃO PAULO");
 		
 		//Pegamos o score do último checkup de cada usuário!
 		for(int i = 0; i < listaUser.size(); i++) {
@@ -123,6 +123,12 @@ public class CheckUpController {
 		}
 		
 		model.addAttribute("listaUsuarios", listaUser);
+		
+		//Pegamos quais os valores são considerados brandos, médios e graves
+		Config config = configService.getConfig(1);
+		model.addAttribute("pontuacao_branda", config.getPontuacao_branda());
+		model.addAttribute("pontuacao_media", config.getPontuacao_media());
+		model.addAttribute("pontuacao_grave", config.getPontuacao_grave());
 		
 		//Verificamos permissão do admin
 		boolean admin = false;
@@ -138,7 +144,7 @@ public class CheckUpController {
 		//Passamos id e permissões de usuário
 		model.addAttribute("usuario_id", id);
 		model.addAttribute("admin",admin);
-				
+						
 		return "checkups/mapa";
 	}
 	
