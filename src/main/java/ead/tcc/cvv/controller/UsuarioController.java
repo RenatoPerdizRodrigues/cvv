@@ -2,6 +2,8 @@ package ead.tcc.cvv.controller;
 
 import java.util.Optional;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -9,6 +11,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -70,27 +73,81 @@ public class UsuarioController {
 	//Retornamos a view de usuários
 	@GetMapping("/cadastrar")
 	public String create(Model model) {
-		
-		//Envio de e-mail
-		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-		mailSender.setHost(this.emailConfiguration.getHost());
-		mailSender.setPort(this.emailConfiguration.getPort());
-		mailSender.setUsername(this.emailConfiguration.getUsername());
-		mailSender.setPassword(this.emailConfiguration.getPassword());
-		
-		SimpleMailMessage mailMessage = new SimpleMailMessage();
-		mailMessage.setFrom("rebsunderline@hotmail.com");
-		mailMessage.setTo("rebsunderline2@hotmail.com");
-		mailMessage.setSubject("Teste");
-		mailMessage.setText("iiihu");
-		
-		mailSender.send(mailMessage);
-
 		Usuario usuario = new Usuario();
 		model.addAttribute("usuario",usuario);
 		return "usuarios/create";
 	}
+	
+	//Página de recuperação de senha
+	@GetMapping("/recuperar")
+	public String recuperar() {
+		return "usuarios/recuperar";
+	}
+	
+	//Envia e-mail de recuperaçaõ
+	@PostMapping("/enviaEmail")
+	public String enviaEmail(final HttpServletRequest request) {
 
+		Usuario usuario = usuarioService.findByEmail(request.getParameter("email"));
+		if(usuario != null) {
+			//Fazemos o token de recuperação
+			String token = passwordEncoder.encode(Long.toString(System.currentTimeMillis()));
+			token = token.replace("/", "");
+			token = token.replace(".", "");
+			token = "http://localhost:8080/reset/" + token;
+			usuario.setToken_senha(token);
+			usuarioService.saveUsuario(usuario);
+			
+			//Envio de e-mail
+			JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+			mailSender.setHost(this.emailConfiguration.getHost());
+			mailSender.setPort(this.emailConfiguration.getPort());
+			mailSender.setUsername(this.emailConfiguration.getUsername());
+			mailSender.setPassword(this.emailConfiguration.getPassword());
+			
+			MimeMessage mimeMessage = mailSender.createMimeMessage();
+			MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+			String htmlMsg = "Foi solicitada uma recuperação de senha para seu usuário no Sistema CVV. <a href=\"" + token + "\">Clique aqui</a> para resetar!";
+			try {
+				helper.setText(htmlMsg, true);
+				helper.setTo(usuario.getEmail());
+				helper.setSubject("CVV - Recuperação de Senha");
+				helper.setFrom("rebsunderline@hotmail.com");
+				mailSender.send(mimeMessage);
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		
+		return "redirect:/";		
+	}
+	
+	//Recuperação de senha
+	@GetMapping("/reset/{token}")
+	public String resetSenha(Model model) {
+		Usuario usuario = usuarioService.findByEmail("rebsunderline@hotmail.com");
+		model.addAttribute("usuario",usuario);
+		return "usuarios/senha";
+	}
+	
+	//Resetar apenas a senha
+	@PostMapping("/resetsenha")
+	public String resetsenha(Usuario usuario, BindingResult bindingResult, final HttpServletRequest request, RedirectAttributes red) {
+		
+		Usuario user = usuarioService.findByEmail("rebsunderline@hotmail.com");
+		
+		String senha = passwordEncoder.encode(request.getParameter("senha"));
+		user.setSenha(senha);
+		user.setToken_senha(null);
+		
+		usuarioService.saveUsuario(user);
+		
+		red.addFlashAttribute("success", "Senha resetada com sucesso!");
+		return "redirect:/";
+	}
+	
 	@PostMapping("/store")
 	public String store(@Valid Usuario usuario, BindingResult bindingResult, final HttpServletRequest request, RedirectAttributes red) {
 
