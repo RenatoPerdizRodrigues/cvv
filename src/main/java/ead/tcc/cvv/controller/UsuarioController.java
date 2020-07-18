@@ -108,7 +108,7 @@ public class UsuarioController {
 			usuario.setTokenSenha(token);
 			usuarioService.saveUsuario(usuario);
 			
-			token = "http://localhost:8080/reset/" + token;
+			token = "http://cvv.mapadefoco.com.br/reset/" + token;
 			
 			//Envio de e-mail
 			JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
@@ -192,7 +192,7 @@ public class UsuarioController {
 					
 					MimeMessage mimeMessage = mailSender.createMimeMessage();
 					MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
-					String htmlMsg = "Olá! O que acha de fazer outro Check-Up no sistema CVV para atualizar o mapa de foco da sua cidade e auxiliar na luta contra o COVID-19?<br><a href=\"http://localhost:8080\">Clique aqui para acessar o sistema.</a> ";
+					String htmlMsg = "Olá! O que acha de fazer outro Check-Up no sistema CVV para atualizar o mapa de foco da sua cidade e auxiliar na luta contra o COVID-19?<br><a href=\"http://cvv.mapadefoco.com.br\">Clique aqui para acessar o sistema.</a> ";
 					try {
 						helper.setText(htmlMsg, true);
 						helper.setTo(usuario.getEmail());
