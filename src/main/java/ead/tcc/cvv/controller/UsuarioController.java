@@ -124,7 +124,7 @@ public class UsuarioController {
 				helper.setText(htmlMsg, true);
 				helper.setTo(usuario.getEmail());
 				helper.setSubject("CVV - Recuperação de Senha");
-				helper.setFrom("rebsunderline@hotmail.com");
+				helper.setFrom("sistemacvv@gmail.com");
 				mailSender.send(mimeMessage);
 			} catch (MessagingException e) {
 				// TODO Auto-generated catch block
@@ -197,7 +197,7 @@ public class UsuarioController {
 						helper.setText(htmlMsg, true);
 						helper.setTo(usuario.getEmail());
 						helper.setSubject("CVV - Que tal fazer um novo Check-Up?");
-						helper.setFrom("rebsunderline@hotmail.com");
+						helper.setFrom("sistemacvv@gmail.com");
 						mailSender.send(mimeMessage);
 					} catch (MessagingException e) {
 						// TODO Auto-generated catch block
