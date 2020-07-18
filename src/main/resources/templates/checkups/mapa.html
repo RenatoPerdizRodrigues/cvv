@@ -5672,14 +5672,12 @@
 
 		loop++;
 
-		if(score > 0){
-			var circle = L.circle([latitude, longitude], {
-				color: fill,
-				fillColor: cor,
-				fillOpacity: 0.5,
-				radius: 500
-			}).addTo(map);
-		}
+		var circle = L.circle([latitude, longitude], {
+			color: fill,
+			fillColor: cor,
+			fillOpacity: 0.5,
+			radius: 500
+		}).addTo(map);
 		
 	</script>
   </div>
