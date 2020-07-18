@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ead.tcc.cvv.config.EmailConfiguration;
 import ead.tcc.cvv.model.DetalhesUsuario;
 import ead.tcc.cvv.model.Usuario;
 import ead.tcc.cvv.service.UsuarioService;
@@ -28,7 +31,8 @@ public class UsuarioController {
 	@Autowired
 	private UsuarioService usuarioService;
 	
-	
+	@Autowired
+	private EmailConfiguration emailConfiguration;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -66,6 +70,22 @@ public class UsuarioController {
 	//Retornamos a view de usuários
 	@GetMapping("/cadastrar")
 	public String create(Model model) {
+		
+		//Envio de e-mail
+		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+		mailSender.setHost(this.emailConfiguration.getHost());
+		mailSender.setPort(this.emailConfiguration.getPort());
+		mailSender.setUsername(this.emailConfiguration.getUsername());
+		mailSender.setPassword(this.emailConfiguration.getPassword());
+		
+		SimpleMailMessage mailMessage = new SimpleMailMessage();
+		mailMessage.setFrom("rebsunderline@hotmail.com");
+		mailMessage.setTo("rebsunderline2@hotmail.com");
+		mailMessage.setSubject("Teste");
+		mailMessage.setText("iiihu");
+		
+		mailSender.send(mailMessage);
+
 		Usuario usuario = new Usuario();
 		model.addAttribute("usuario",usuario);
 		return "usuarios/create";
