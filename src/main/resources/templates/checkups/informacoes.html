@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>CVV</title>
+
+	<link th:href="@{/css/styles.css}" rel="stylesheet" />
+	<link th:href="@{/css/halfmoon.min.css}" rel="stylesheet" />
+	 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+		
+</head>
+<body>
+  <div data-sidebar-hidden="hidden" class="page-wrapper overflow-y-scroll with-navbar with-sidebar with-transitions" data-sidebar-type="overlayed-all">
+  	
+	<!--Navbar-->
+	<div th:replace="fragments/navbar :: navbar" >
+	</div>
+	
+	<!--Sidebar-->
+	<div th:replace="fragments/sidebar :: sidebar" />
+	</div>
+    
+	<div class="row formLogado">
+		<div class="content-wrapper col-md-6 offset-md-3 formDiv formLogado">
+			<h1>Informações</h1>
+			<p class="texto">Para aprender mais sobre o COVID-19 e se previnir, recomendamos as fontes abaixo!<p>
+            <div class="sidebar-divider"style="margin-top:1em;margin-bottom:1em;"></div>
+            
+            <a class="infos" href="https://www.paho.org/bra/index.php?option=com_content&view=article&id=6101:covid19&Itemid=875#perguntas"><h5>Perguntas e Respostas sobre a COVID-19 - Organização Pan Americana da Saúde</h5></a>
+            <div class="sidebar-divider"style="margin-top:1em;margin-bottom:1em;"></div>
+            
+            <a class="infos" href="https://www.hospitalsiriolibanes.org.br/coronavirus/Documents/infografico-covid.pdf"><h5>Previna-se contra o novo Coronavírus - Hospital Sírio Libanês</h5></a>
+            <div class="sidebar-divider"style="margin-top:1em;margin-bottom:1em;"></div>
+            
+            <a class="infos" href="https://www.saopaulo.sp.gov.br/spnoticias/ipem-sp-orienta-sobre-o-uso-de-mascaras-para-prevencao-a-covid-19/"><h5>Orientação sobre o uso de máscaras - Ipem-SP</h5></a>
+            <div class="sidebar-divider"style="margin-top:1em;margin-bottom:1em;"></div>
+
+			<a class="infos" href="https://covid.saude.gov.br/"><h5>Portal de informações sobre o Coronavírus - Governo do Brasil</h5></a>
+            <div class="sidebar-divider"style="margin-top:1em;margin-bottom:1em;"></div>
+
+	    </div>
+    </div>
+    
+  </div>
+  <script th:src="@{/js/halfmoon.min.js}" ></script>
+</body>
+</html>

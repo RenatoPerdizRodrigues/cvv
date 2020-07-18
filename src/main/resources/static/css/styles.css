@@ -107,3 +107,7 @@ function myFunction(x) {
 		margin-top:0em;
 	}
 }
+
+.infos h5 {
+	color: #16669c;
+}

@@ -242,6 +242,27 @@ public class CheckUpController {
 		
 		return "checkups/create";
 	}
+	
+	@GetMapping("/checkups/informacoes")
+	public String informacoes(Model model) {
+		
+		//Verificamos permissão do admin
+		boolean admin = false;
+		long id;
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if (principal instanceof DetalhesUsuario) {
+			id= ((DetalhesUsuario)principal).getUserId();
+			admin = ((DetalhesUsuario)principal).getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"));
+		} else {
+			id = 1;
+		}
+		
+		//Passamos id e permissões de usuário
+		model.addAttribute("usuario_id", id);
+		model.addAttribute("admin",admin);
+		
+		return "checkups/informacoes";
+	}
 
 	@PostMapping("/checkups/store")
 	public String store(@ModelAttribute("checkups") CheckUp checkup, final HttpServletRequest request, Model model) {
