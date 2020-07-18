@@ -66,6 +66,16 @@
 			    <option value="N" 
 			      th:selected="${recebe_lembrete == 'N'}">Não</option>
 			</select>
+			
+			<div th:if="${admin}">
+				<br><label for="É administrador?">É administrador?</label>
+	            <select class="form-control" th:field="*{papel}">
+			        <option value="ROLE_USER" 
+					      th:selected="${papel == 'ROLE_USER'}">Não</option>
+				    <option value="ROLE_ADMIN,ROLE_USER" 
+				      th:selected="${papel == 'ROLE_ADMIN,ROLE_USER'}">Sim</option>
+				</select>
+			</div>
             
             <div class="text-right" style="margin-top:1em;">
 	            <button id="verificador" type="button" onclick="verificaEndereco()" class="btn btn-success">Verificar Endereço</button>

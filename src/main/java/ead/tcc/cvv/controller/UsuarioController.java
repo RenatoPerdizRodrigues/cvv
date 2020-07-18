@@ -212,7 +212,10 @@ public class UsuarioController {
 		}
 		
 		//Definimos o papel, que é sempre USUARIO para um cadastro normal
-		usuario.setPapel("ROLE_USER");
+		//Mas não mexemos na permissão caso seja edição
+		if(metodo.equals("criacao")) {
+			usuario.setPapel("ROLE_USER");
+		}
 		
 		usuarioService.saveUsuario(usuario);
 		
