@@ -2,6 +2,7 @@ package ead.tcc.cvv.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Properties;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -117,6 +118,12 @@ public class UsuarioController {
 			mailSender.setUsername(this.emailConfiguration.getUsername());
 			mailSender.setPassword(this.emailConfiguration.getPassword());
 			
+			Properties props = mailSender.getJavaMailProperties();
+	        props.put("mail.transport.protocol", "smtp");
+	        props.put("mail.smtp.auth", "true");
+	        props.put("mail.smtp.starttls.enable", "true");
+	        props.put("mail.debug", "true");
+			
 			MimeMessage mimeMessage = mailSender.createMimeMessage();
 			MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
 			String htmlMsg = "Foi solicitada uma recuperação de senha para seu usuário no Sistema CVV. <a href=\"" + token + "\">Clique aqui</a> para resetar!";
@@ -189,6 +196,12 @@ public class UsuarioController {
 					mailSender.setPort(this.emailConfiguration.getPort());
 					mailSender.setUsername(this.emailConfiguration.getUsername());
 					mailSender.setPassword(this.emailConfiguration.getPassword());
+					
+					Properties props = mailSender.getJavaMailProperties();
+			        props.put("mail.transport.protocol", "smtp");
+			        props.put("mail.smtp.auth", "true");
+			        props.put("mail.smtp.starttls.enable", "true");
+			        props.put("mail.debug", "true");
 					
 					MimeMessage mimeMessage = mailSender.createMimeMessage();
 					MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
