@@ -24,5 +24,8 @@ public interface CheckUpInterface {
 	//Pegar check-up por usuário, mas só o último
 	long getLastCheckUpUsuario(long id);
 	
+	//Pegamos a lista de usuários que fizeram checkup além da data configurada
+	List<CheckUp> getLembretes(String dataConfig);
+	
 	
 }

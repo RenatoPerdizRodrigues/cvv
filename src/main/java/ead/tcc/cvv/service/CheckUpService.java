@@ -56,6 +56,11 @@ public class CheckUpService implements CheckUpInterface{
 		}
 		
 	}
+	
+	@Override
+	public List<CheckUp> getLembretes(String dataConfig){
+		return this.checkupRepository.getLembretes(dataConfig);
+	}
 
 	@Override
 	public void deleteCheckUp(long id) {

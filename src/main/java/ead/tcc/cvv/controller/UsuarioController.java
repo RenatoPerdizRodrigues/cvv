@@ -1,5 +1,6 @@
 package ead.tcc.cvv.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.mail.MessagingException;
@@ -25,8 +26,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ead.tcc.cvv.config.EmailConfiguration;
+import ead.tcc.cvv.model.CheckUp;
 import ead.tcc.cvv.model.DetalhesUsuario;
 import ead.tcc.cvv.model.Usuario;
+import ead.tcc.cvv.service.CheckUpService;
+import ead.tcc.cvv.service.ConfigService;
 import ead.tcc.cvv.service.UsuarioService;
 
 @Controller
@@ -39,6 +43,12 @@ public class UsuarioController {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private ConfigService configService;
+	
+	@Autowired
+	private CheckUpService checkupService;
 
     //Mostramos os usuários
 	@GetMapping("/usuarios")
@@ -84,7 +94,7 @@ public class UsuarioController {
 		return "usuarios/recuperar";
 	}
 	
-	//Envia e-mail de recuperaçaõ
+	//Envia e-mail de recuperação
 	@PostMapping("/enviaEmail")
 	public String enviaEmail(final HttpServletRequest request) {
 
@@ -160,6 +170,44 @@ public class UsuarioController {
 		
 		red.addFlashAttribute("success", "Senha resetada com sucesso!");
 		return "redirect:/";
+	}
+	
+	@GetMapping("/lembretes")
+	public String enviaLembretes(RedirectAttributes red) {
+		
+		//Pegamos todos os usuários que precisam receber lembretes
+		List<CheckUp> lembretes = checkupService.getLembretes(configService.getConfig(1).getTempo_lembrete());
+		
+		for(int i = 0; i < lembretes.size(); i++) {
+			//Verificamos se o usuário recebe lembrete
+			Usuario usuario = usuarioService.getUsuario(lembretes.get(i).getUsuario_id());
+			
+			if(usuario.getRecebe_lembrete().equals("S")) {
+					//Envio de e-mail
+					JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+					mailSender.setHost(this.emailConfiguration.getHost());
+					mailSender.setPort(this.emailConfiguration.getPort());
+					mailSender.setUsername(this.emailConfiguration.getUsername());
+					mailSender.setPassword(this.emailConfiguration.getPassword());
+					
+					MimeMessage mimeMessage = mailSender.createMimeMessage();
+					MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+					String htmlMsg = "Olá! O que acha de fazer outro Check-Up no sistema CVV para atualizar o mapa de foco da sua cidade e auxiliar na luta contra o COVID-19?<br><a href=\"http://localhost:8080\">Clique aqui para acessar o sistema.</a> ";
+					try {
+						helper.setText(htmlMsg, true);
+						helper.setTo(usuario.getEmail());
+						helper.setSubject("CVV - Que tal fazer um novo Check-Up?");
+						helper.setFrom("rebsunderline@hotmail.com");
+						mailSender.send(mimeMessage);
+					} catch (MessagingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			}
+		}
+		
+		red.addFlashAttribute("success", "Usuários foram notificados!");		
+		return "redirect:/usuarios";
 	}
 	
 	@PostMapping("/store")

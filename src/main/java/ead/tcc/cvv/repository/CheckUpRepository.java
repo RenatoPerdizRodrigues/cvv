@@ -22,4 +22,7 @@ public interface CheckUpRepository extends JpaRepository<CheckUp, Long>{
 	
 	@Query(value="SELECT id, score, higiene, mascara, isolamento, data_checkup, usuario_id FROM check_ups WHERE usuario_id = :UsuarioId ORDER BY data_checkup ASC LIMIT 1",nativeQuery=true)
 	public Optional<CheckUp> lastlByUsuario(@Param("UsuarioId") long id);
+	
+	@Query(value="SELECT id, score, higiene, mascara, isolamento, data_checkup, usuario_id FROM check_ups WHERE data_checkup <= DATE_SUB(CURDATE(), INTERVAL :DataConfig DAY) GROUP BY usuario_id",nativeQuery=true)
+	public List<CheckUp> getLembretes(@Param("DataConfig") String dataConfig);
 }

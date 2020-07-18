@@ -48,9 +48,23 @@ public class CheckUpController {
 
 	@GetMapping("/checkups")
 	public String checkups(Model model) {
-		model.addAttribute("listaCheckUps", checkUpService.getAllCheckUps());
-		model.addAttribute("total_checkups", checkUpService.getAllCheckUps().size());
+		List<CheckUp> checkUpList = checkUpService.getAllCheckUps();
 		
+		model.addAttribute("listaCheckUps", checkUpList);
+		model.addAttribute("total_checkups", checkUpList.size());
+		
+		int total_checkups = 0;
+		
+		//Loopamos a lista de check-ups para arrumar as datas
+		for (int i = 0; i < checkUpList.size(); i++) {
+			String data = checkUpList.get(i).getData_checkup();
+			String split[] = data.split("-");
+			
+			total_checkups++;
+			
+			checkUpList.get(i).setData_checkup(split[2] + "/" + split[1] + "/" + split[0]);
+			
+		}
 		
 		//Verificamos permissão do admin
 		boolean admin = false;
