@@ -22,4 +22,7 @@ public interface UsuarioInterface {
 	
 	//Pega usuário por e-mail
 	Usuario findByEmail(String email);
+
+	//Pega usuário por token
+	Usuario findByTokenSenha(String tokenSenha);
 }

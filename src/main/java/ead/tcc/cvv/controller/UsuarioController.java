@@ -94,9 +94,11 @@ public class UsuarioController {
 			String token = passwordEncoder.encode(Long.toString(System.currentTimeMillis()));
 			token = token.replace("/", "");
 			token = token.replace(".", "");
-			token = "http://localhost:8080/reset/" + token;
-			usuario.setToken_senha(token);
+
+			usuario.setTokenSenha(token);
 			usuarioService.saveUsuario(usuario);
+			
+			token = "http://localhost:8080/reset/" + token;
 			
 			//Envio de e-mail
 			JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
@@ -126,9 +128,16 @@ public class UsuarioController {
 	
 	//Recuperação de senha
 	@GetMapping("/reset/{token}")
-	public String resetSenha(Model model) {
-		Usuario usuario = usuarioService.findByEmail("rebsunderline@hotmail.com");
+	public String resetSenha(Model model, @PathVariable(value = "token") String token, RedirectAttributes red) {
+		Usuario usuario = usuarioService.findByTokenSenha(token);
+		
+		if(usuario == null) {
+			red.addFlashAttribute("warning", "Token incorreto");
+			return "redirect:/";
+		}
+		
 		model.addAttribute("usuario",usuario);
+		model.addAttribute("token",token);
 		return "usuarios/senha";
 	}
 	
@@ -136,11 +145,16 @@ public class UsuarioController {
 	@PostMapping("/resetsenha")
 	public String resetsenha(Usuario usuario, BindingResult bindingResult, final HttpServletRequest request, RedirectAttributes red) {
 		
-		Usuario user = usuarioService.findByEmail("rebsunderline@hotmail.com");
+		Usuario user = usuarioService.findByTokenSenha(request.getParameter("token"));
+				
+		if(user == null) {
+			red.addFlashAttribute("warning", "Token incorreto");
+			return "redirect:/";
+		}
 		
 		String senha = passwordEncoder.encode(request.getParameter("senha"));
 		user.setSenha(senha);
-		user.setToken_senha(null);
+		user.setTokenSenha(null);
 		
 		usuarioService.saveUsuario(user);
 		

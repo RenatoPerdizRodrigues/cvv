@@ -56,4 +56,16 @@ public class UsuarioService implements UsuarioInterface {
 		
 		return usuario;
 	}
+
+	public Usuario findByTokenSenha(String tokenSenha) {
+		Optional<Usuario> optional = usuarioRepository.findByTokenSenha(tokenSenha);
+		Usuario usuario = null;
+		if(optional.isPresent()) {
+			usuario= optional.get();
+		} else {
+			return null;
+		}
+		
+		return usuario;
+	}
 }

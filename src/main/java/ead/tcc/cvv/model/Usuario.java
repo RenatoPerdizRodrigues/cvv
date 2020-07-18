@@ -80,8 +80,8 @@ public class Usuario {
 	private String recebe_lembrete;
 	
 
-	@Column(name = "token_senha")
-	private String token_senha;
+	@Column(name = "tokenSenha")
+	private String tokenSenha;
 	
 	//Coluna para guardar o score
 	private long score = 0;
@@ -182,12 +182,12 @@ public class Usuario {
 		this.score = score;
 	}
 
-	public String getToken_senha() {
-		return token_senha;
+	public String getTokenSenha() {
+		return tokenSenha;
 	}
 
-	public void setToken_senha(String token_senha) {
-		this.token_senha = token_senha;
+	public void setTokenSenha(String tokenSenha) {
+		this.tokenSenha = tokenSenha;
 	}
 
 	public String getRecebe_lembrete() {

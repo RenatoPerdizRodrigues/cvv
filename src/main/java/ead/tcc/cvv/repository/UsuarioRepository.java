@@ -11,5 +11,6 @@ import ead.tcc.cvv.model.Usuario;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
 	Optional<Usuario> findByEmail(String email);
+	Optional<Usuario> findByTokenSenha(String tokenSenha);
 	List<Usuario> findByCidade(String cidade);
 }
