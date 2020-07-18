@@ -69,6 +69,16 @@
 	            <input class="form-control" type="hidden" id="lat" th:field="*{latitude}">
 	            <input class="form-control" type="hidden" id="long" th:field="*{longitude}">
 	            <input class="form-control" type="hidden" name="metodo" value="criacao">
+	            
+	            <div class="sidebar-divider"></div>
+	            
+	            <label for="Gostaria de receber lembretes para novos check-ups?">Gostaria de receber lembretes para novos check-ups?</label>
+	            <select class="form-control" th:field="*{recebe_lembrete}">
+			        <option value="S" 
+					      th:selected="${recebe_lembrete == 'S'}">Sim</option>
+				    <option value="N" 
+				      th:selected="${recebe_lembrete == 'N'}">Não</option>
+				</select>
 	
 				<div class="text-right" style="margin-top:1em;">
 				    <button id="verificador" type="button" onclick="verificaEndereco()" class="btn btn-success">Verificar Endereço</button>

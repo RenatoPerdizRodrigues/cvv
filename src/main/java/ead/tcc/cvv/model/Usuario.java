@@ -76,6 +76,13 @@ public class Usuario {
 	@Column(name = "papel")
 	private String papel;
 	
+	@Column(name = "recebe_lembrete")
+	private String recebe_lembrete;
+	
+
+	@Column(name = "token_senha")
+	private String token_senha;
+	
 	//Coluna para guardar o score
 	private long score = 0;
 
@@ -174,7 +181,21 @@ public class Usuario {
 	public void setScore(long score) {
 		this.score = score;
 	}
-	
-	//Getters e setters	
+
+	public String getToken_senha() {
+		return token_senha;
+	}
+
+	public void setToken_senha(String token_senha) {
+		this.token_senha = token_senha;
+	}
+
+	public String getRecebe_lembrete() {
+		return recebe_lembrete;
+	}
+
+	public void setRecebe_lembrete(String recebe_lembrete) {
+		this.recebe_lembrete = recebe_lembrete;
+	}
 	
 }

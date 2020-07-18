@@ -37,6 +37,7 @@ public class UsuarioController {
 	@GetMapping("/usuarios")
 	public String viewHomePage(Model model) {
 		model.addAttribute("listaUsuarios", usuarioService.getAllUsuarios());
+		model.addAttribute("total_usuarios", usuarioService.getAllUsuarios().size());
 		
 		String username;
 
@@ -148,7 +149,7 @@ public class UsuarioController {
 		
 		model.addAttribute("usuario",usuario);
 		model.addAttribute("id",id);
-		
+
 		//Verificamos permissão do admin
 		boolean admin = false;
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();

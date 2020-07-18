@@ -33,7 +33,7 @@
     
 	<div class="row formLogado">
 		<div class="content-wrapper col-md-4 offset-md-4 formDiv formLogado">
-			<h1>Lista de Checkups</h1>
+			<h1>Lista de Checkups (<span th:text="${total_checkups}" /> no total)</h1>
 			<table class="table table-stripped">
 				<thead>
 					<tr>
@@ -47,9 +47,9 @@
 				<tbody>
 					<tr th:each="checkUp: ${listaCheckUps}">
 						<td th:text="${checkUp.score}"></td>
-						<td th:text="${checkUp.mascara}"></td>
-						<td th:text="${checkUp.isolamento}"></td>
-						<td th:text="${checkUp.higiene}"></td>
+						<td th:text="${checkUp.mascara == '1'} ? 'Sim' : 'Não'"></td>
+						<td th:text="${checkUp.isolamento == '1'} ? 'Sim' : 'Não'"></td>
+						<td th:text="${checkUp.higiene == '1'} ? 'Sim' : 'Não'"></td>
 						<td th:text="${checkUp.data_checkup}"></td>
 					</tr>
 				</tbody>

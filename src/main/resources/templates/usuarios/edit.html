@@ -50,7 +50,7 @@
             <label for="Endereço">Endereço</label>
             <input type="search" id="endereco" th:field="*{endereco}" placeholder="Digite para Buscar">
             <span class="erro_val" th:if="${#fields.hasErrors('endereco')}" th:errors="*{endereco}"></span><br>
-            <label for="Cidade">Cidade</label>
+            <br><label for="Cidade">Cidade</label>
             <input readonly class="form-control" id="cidade" type="text" th:field="*{cidade}" style="background-color: #e3e3e3" placeholder="Digite seu endereço acima..."><br>
             <label for="Estado">Estado</label>
             <input readonly class="form-control" id="uf" type="text" th:field="*{uf}" style="background-color: #e3e3e3;" placeholder="Digite seu endereço acima..."><br>
@@ -58,6 +58,14 @@
             <input class="form-control" type="hidden" id="long" th:field="*{longitude}">
             <input class="form-control" type="hidden" name="metodo" value="edicao">
             <input class="form-control" type="hidden" th:field="*{id}">
+            
+            <label for="Gostaria de receber lembretes para novos check-ups?">Gostaria de receber lembretes para novos check-ups?</label>
+            <select class="form-control" th:field="*{recebe_lembrete}">
+		        <option value="S" 
+				      th:selected="${recebe_lembrete == 'S'}">Sim</option>
+			    <option value="N" 
+			      th:selected="${recebe_lembrete == 'N'}">Não</option>
+			</select>
             
             <div class="text-right" style="margin-top:1em;">
 	            <button id="verificador" type="button" onclick="verificaEndereco()" class="btn btn-success">Verificar Endereço</button>
